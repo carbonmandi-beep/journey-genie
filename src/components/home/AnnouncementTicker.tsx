@@ -3,13 +3,13 @@ interface AnnouncementTickerProps {
 }
 
 const JOURNEY_GENIE_MESSAGES = [
-  "✈️ Domestic & International Flights",
-  "💰 Found a better fare? Check with Journey Genie",
-  "🌴 Customized Holiday Packages",
-  "🏨 Hotels & Transfers",
-  "🛂 Visa Assistance",
-  "💬 Personal Travel Support",
-  "🌍 Travel More. Pay Smarter.",
+  "Domestic & International Flights",
+  "Found a better fare? Check with Journey Genie",
+  "Customized Holiday Packages",
+  "Hotels & Transfers",
+  "Visa Assistance",
+  "Personal Travel Support",
+  "Travel More. Pay Smarter.",
 ];
 
 export function AnnouncementTicker({
