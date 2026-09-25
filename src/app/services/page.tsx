@@ -1,60 +1,155 @@
 import Link from "next/link";
-import { createPageMetadata } from "@/lib/metadata";
-import { PAGE_SEO } from "@/lib/seo";
-import { SectionHeading } from "@/components/shared/SectionHeading";
+import {
+  ArrowRight,
+  FileCheck,
+  Globe2,
+  Hotel,
+  MessageCircle,
+  Plane,
+  ShieldCheck,
+  Users,
+} from "lucide-react";
+
 import { PageHero } from "@/components/shared/PageHero";
-import { PAGE_HEROES } from "@/lib/page-heroes";
-import { dataProvider } from "@/lib/data-provider";
-import { TRUST_TEXT } from "@/lib/constants";
-import { CheckCircle } from "lucide-react";
-import { Plane, Sparkles, FileText, Hotel, Shield, Car, Building2, Palmtree, Users, Globe, type LucideIcon } from "lucide-react";
+import { buttonVariants } from "@/components/ui/button";
+import { ASSETS } from "@/lib/assets";
+import { SITE } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 
-export const revalidate = 600;
-
-export const metadata = createPageMetadata({
-  title: PAGE_SEO.services.title,
-  description: PAGE_SEO.services.description,
-  path: PAGE_SEO.services.path,
-  keywords: PAGE_SEO.services.keywords,
-});
-
-const iconMap: Record<string, LucideIcon> = {
-  Plane, Mosque: Sparkles, FileText, Hotel, Shield, Car, Building2, Palmtree, Users, Globe,
-};
-
-const visaServices = [
-  { name: "Thailand E-Visa", desc: "Tourist e-visa processing assistance" },
-  { name: "Malaysia E-Visa", desc: "Fast Malaysia visit visa support" },
-  { name: "UAE Visit Visa", desc: "UAE visit visa for tourism and business" },
-  { name: "Saudi Travel Assistance", desc: "Umrah and visit-related travel support" },
-  { name: "Other Countries", desc: "Contact us for additional destinations" },
+const services = [
+  {
+    icon: Plane,
+    title: "Domestic Flights",
+    description:
+      "Book and enquire about flights across India with personal assistance from our travel team.",
+    href: "/available-tickets/",
+  },
+  {
+    icon: Globe2,
+    title: "International Flights",
+    description:
+      "Plan international journeys with flight options and personalized support.",
+    href: "/available-tickets/",
+  },
+  {
+    icon: Hotel,
+    title: "Hotels & Resorts",
+    description:
+      "Find hotels and resorts based on your destination, dates, preferences and budget.",
+    href: "/hotels/",
+  },
+  {
+    icon: Globe2,
+    title: "Holiday Packages",
+    description:
+      "Customized domestic and international holidays for couples, families and groups.",
+    href: "/tours/",
+  },
+  {
+    icon: FileCheck,
+    title: "Visa Assistance",
+    description:
+      "Documentation and application assistance for selected international destinations.",
+    href: "/visa-assistance/",
+  },
+  {
+    icon: Users,
+    title: "Corporate Travel",
+    description:
+      "Travel planning and booking assistance for businesses, teams and organizations.",
+    href: "/corporate-travel/",
+  },
 ];
 
-export default async function ServicesPage() {
-  const services = await dataProvider.getServices();
+const process = [
+  {
+    number: "01",
+    title: "Tell Us Your Requirement",
+    text: "Share your destination, dates, travellers and preferences with our team.",
+  },
+  {
+    number: "02",
+    title: "Explore Your Options",
+    text: "We check the available flight, hotel and travel options for your requirement.",
+  },
+  {
+    number: "03",
+    title: "Choose What Works for You",
+    text: "Compare the available options and select what suits your journey.",
+  },
+  {
+    number: "04",
+    title: "Travel With Confidence",
+    text: "Our team remains available to support you through the booking process.",
+  },
+];
+
+export const metadata = {
+  title: "Travel Services | Journey Genie",
+  description:
+    "Explore Journey Genie travel services including domestic and international flights, hotels, holiday packages, visa assistance and corporate travel.",
+};
+
+export default function ServicesPage() {
+  const whatsappUrl =
+    "https://wa.me/919876260822?text=Hi%20Journey%20Genie,%20I%20need%20help%20with%20my%20travel%20booking.";
 
   return (
     <>
-      <PageHero {...PAGE_HEROES.services} />
+      <PageHero
+        title="Travel Services"
+        subtitle="Everything you need for your next journey — flights, hotels, holidays and visa assistance."
+        backgroundImage={ASSETS.heroes.services}
+        badge="Journey Genie"
+        cta={{
+          label: "Talk to Our Team",
+          href: whatsappUrl,
+        }}
+      />
 
-      <section className="section-padding">
+      <section className="section-padding bg-white">
         <div className="container-wide">
-          <div className="mb-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {TRUST_TEXT.map((t) => (
-              <div key={t} className="flex items-start gap-2 rounded-xl border border-gold/20 bg-gold/5 p-4 text-sm">
-                <CheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-gold" /> {t}
-              </div>
-            ))}
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="text-sm font-bold uppercase tracking-[0.2em] text-royal">
+              What We Offer
+            </p>
+
+            <h2 className="mt-3 font-heading text-3xl font-bold text-navy md:text-4xl">
+              Your Journey Starts Here
+            </h2>
+
+            <p className="mt-5 text-base leading-8 text-muted-foreground md:text-lg">
+              Journey Genie brings your key travel requirements together in one
+              place, with personal assistance from enquiry to booking.
+            </p>
           </div>
-          <SectionHeading title="What We Offer" />
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+
+          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {services.map((service) => {
-              const Icon = iconMap[service.icon] || Plane;
+              const Icon = service.icon;
+
               return (
-                <Link key={service.id} href={service.href} className="card-premium group p-6">
-                  <Icon className="h-10 w-10 text-gold" />
-                  <h3 className="mt-4 font-heading text-lg font-semibold text-navy group-hover:text-royal">{service.title}</h3>
-                  <p className="mt-2 text-sm text-muted-foreground">{service.description}</p>
+                <Link
+                  key={service.title}
+                  href={service.href}
+                  className="group rounded-2xl border border-border/70 bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-gold/40 hover:shadow-xl"
+                >
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-navy text-gold">
+                    <Icon className="h-6 w-6" />
+                  </div>
+
+                  <h3 className="mt-5 font-heading text-xl font-bold text-navy">
+                    {service.title}
+                  </h3>
+
+                  <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                    {service.description}
+                  </p>
+
+                  <span className="mt-5 inline-flex items-center text-sm font-bold text-royal">
+                    Explore service
+                    <ArrowRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </span>
                 </Link>
               );
             })}
@@ -62,17 +157,73 @@ export default async function ServicesPage() {
         </div>
       </section>
 
-      <section id="visit-visa" className="section-padding bg-light-bg">
+      <section className="section-padding bg-light-bg">
         <div className="container-wide">
-          <SectionHeading title="Visit Visa Services" subtitle="E-visas and visit visa assistance for popular destinations" />
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {visaServices.map((v) => (
-              <div key={v.name} className="card-premium p-5">
-                <h3 className="font-heading font-semibold text-navy">{v.name}</h3>
-                <p className="mt-1 text-sm text-muted-foreground">{v.desc}</p>
-                <Link href="/inquiry/" className="mt-3 inline-block text-sm font-medium text-royal hover:text-gold">Apply / Inquire →</Link>
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-gold">
+              How It Works
+            </p>
+
+            <h2 className="mt-3 font-heading text-3xl font-bold text-navy md:text-4xl">
+              Simple. Personal. Travel-Focused.
+            </h2>
+
+            <p className="mt-4 text-muted-foreground">
+              Tell us what you need and let our travel team help you navigate
+              the available options.
+            </p>
+          </div>
+
+          <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+            {process.map((item) => (
+              <div
+                key={item.number}
+                className="rounded-2xl border border-border/70 bg-white p-6 shadow-sm"
+              >
+                <div className="text-sm font-black tracking-widest text-gold">
+                  {item.number}
+                </div>
+
+                <h3 className="mt-4 font-heading text-lg font-bold text-navy">
+                  {item.title}
+                </h3>
+
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                  {item.text}
+                </p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section-padding bg-navy text-white">
+        <div className="container-wide">
+          <div className="mx-auto max-w-3xl text-center">
+            <ShieldCheck className="mx-auto h-9 w-9 text-gold" />
+
+            <h2 className="mt-5 font-heading text-3xl font-bold md:text-4xl">
+              Found a Better Flight Fare?
+            </h2>
+
+            <p className="mt-4 leading-7 text-white/70">
+              Send us a screenshot on WhatsApp. Our travel team will check the
+              available options for you before you book.
+            </p>
+
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-7 inline-flex items-center rounded-lg bg-gold px-6 py-3.5 font-bold text-navy transition hover:opacity-90"
+            >
+              <MessageCircle className="mr-2 h-5 w-5" />
+              Check With Journey Genie
+            </a>
+
+            <p className="mt-4 text-sm text-white/50">
+              WhatsApp: {SITE.whatsappNumber}
+            </p>
           </div>
         </div>
       </section>
