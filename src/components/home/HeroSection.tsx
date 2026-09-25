@@ -212,5 +212,5 @@ export function HeroSection({ posters }: { posters: string[] }) {
         </div>
       </div>
     </section>
-  );
+  ); 
 }
