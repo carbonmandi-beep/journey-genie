@@ -5,14 +5,13 @@ import Image from "next/image";
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { ArrowRight, Plane } from "lucide-react";
+import { ArrowRight, Plane, MessageCircle } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { AnimatedFlightPath } from "@/components/motion/AnimatedFlightPath";
 import { FloatingAircraftLayer } from "@/components/motion/FloatingAircraftLayer";
 import { HeroPosterCarousel } from "@/components/home/HeroPosterCarousel";
 import { cn } from "@/lib/utils";
 import { ASSETS } from "@/lib/assets";
-import { SITE } from "@/lib/constants";
 
 gsap.registerPlugin(useGSAP);
 
@@ -22,19 +21,70 @@ export function HeroSection({ posters }: { posters: string[] }) {
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
+
       mm.add("(prefers-reduced-motion: no-preference)", () => {
-        const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
-        tl.from(".hero-badge", { opacity: 0, y: 20, duration: 0.55 })
-          .from(".hero-title", { opacity: 0, y: 28, duration: 0.7 }, "-=0.25")
-          .from(".hero-sub", { opacity: 0, y: 20, duration: 0.55 }, "-=0.35")
-          .from(".hero-cta", { opacity: 0, y: 16, duration: 0.5, stagger: 0.08 }, "-=0.2")
-          .from(".hero-trust", { opacity: 0, y: 12, duration: 0.45 }, "-=0.15");
-      });
-      mm.add("(prefers-reduced-motion: reduce)", () => {
-        gsap.set([".hero-badge", ".hero-title", ".hero-sub", ".hero-cta", ".hero-trust"], {
-          opacity: 1,
-          y: 0,
+        const tl = gsap.timeline({
+          defaults: { ease: "power2.out" },
         });
+
+        tl.from(".hero-badge", {
+          opacity: 0,
+          y: 20,
+          duration: 0.55,
+        })
+          .from(
+            ".hero-title",
+            {
+              opacity: 0,
+              y: 28,
+              duration: 0.7,
+            },
+            "-=0.25"
+          )
+          .from(
+            ".hero-sub",
+            {
+              opacity: 0,
+              y: 20,
+              duration: 0.55,
+            },
+            "-=0.35"
+          )
+          .from(
+            ".hero-cta",
+            {
+              opacity: 0,
+              y: 16,
+              duration: 0.5,
+              stagger: 0.08,
+            },
+            "-=0.2"
+          )
+          .from(
+            ".hero-trust",
+            {
+              opacity: 0,
+              y: 12,
+              duration: 0.45,
+            },
+            "-=0.15"
+          );
+      });
+
+      mm.add("(prefers-reduced-motion: reduce)", () => {
+        gsap.set(
+          [
+            ".hero-badge",
+            ".hero-title",
+            ".hero-sub",
+            ".hero-cta",
+            ".hero-trust",
+          ],
+          {
+            opacity: 1,
+            y: 0,
+          }
+        );
       });
 
       return () => mm.revert();
@@ -42,60 +92,121 @@ export function HeroSection({ posters }: { posters: string[] }) {
     { scope: sectionRef }
   );
 
+  const whatsappUrl =
+    "https://wa.me/919876260822?text=Hi%20Journey%20Genie,%20I%20want%20to%20check%20the%20best%20available%20flight%20fare.";
+
   return (
-    <section ref={sectionRef} className="relative min-h-[85vh] overflow-hidden bg-navy">
+    <section
+      ref={sectionRef}
+      className="relative min-h-[85vh] overflow-hidden bg-navy"
+    >
+      {/* Background */}
       <div className="absolute inset-0">
         <Image
           src={ASSETS.heroPoster}
-          alt=""
+          alt="Journey Genie travel"
           fill
           priority
           sizes="100vw"
           className="object-cover"
         />
+
         <div className="absolute inset-0 bg-gradient-to-br from-navy/95 via-navy/80 to-royal/40" />
+
         <FloatingAircraftLayer density="medium" />
-        <AnimatedFlightPath variant="hero" speed={6} className="bottom-[20%] h-32 md:h-40" />
+
+        <AnimatedFlightPath
+          variant="hero"
+          speed={6}
+          className="bottom-[20%] h-32 md:h-40"
+        />
       </div>
 
+      {/* Main Content */}
       <div className="container-wide relative z-10 flex min-h-[85vh] flex-col justify-center gap-10 py-16 md:py-20 lg:flex-row lg:items-center lg:justify-between">
         <div className="max-w-3xl">
+          {/* Badge */}
           <div className="hero-badge mb-5 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-white/5 px-4 py-1.5 text-sm text-gold-light backdrop-blur-sm">
             <Plane className="h-4 w-4" />
-            Premium Travel & Umrah Services
+            Flights • Hotels • Holidays • Visa Assistance
           </div>
-          <h1 className="hero-title font-heading text-[clamp(2rem,5vw,3.5rem)] font-bold leading-[1.12] text-white">
-            Travel Smart. Travel Safe.
-            <span className="mt-2 block text-gradient-gold">Travel with Al Qibla.</span>
+
+          {/* Main Heading */}
+          <h1 className="hero-title font-heading text-[clamp(2.2rem,5vw,4rem)] font-bold leading-[1.08] text-white">
+            Don&apos;t Book Your Flight
+            <span className="mt-2 block text-gradient-gold">
+              Before Checking With Us!
+            </span>
           </h1>
-          <p className="hero-sub mt-5 max-w-2xl text-base leading-relaxed text-white/80 md:text-lg">
-            {SITE.heroSubheading}
+
+          {/* Subheading */}
+          <p className="hero-sub mt-5 max-w-2xl text-base leading-relaxed text-white/85 md:text-lg">
+            Found a better flight fare online? Send us a screenshot on
+            WhatsApp and our travel team will check the available options for
+            you.
           </p>
 
+          {/* CTA Buttons */}
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link
-              href="/available-tickets/"
-              className={cn(buttonVariants({ variant: "primaryGold", size: "lg" }), "hero-cta")}
-            >
-              Explore Live Flights
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
             <a
-              href={SITE.whatsapp}
+              href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className={cn(buttonVariants({ variant: "outlineLight", size: "lg" }), "hero-cta")}
+              className={cn(
+                buttonVariants({
+                  variant: "primaryGold",
+                  size: "lg",
+                }),
+                "hero-cta"
+              )}
             >
-              Talk to an Agent
+              <MessageCircle className="mr-2 h-5 w-5" />
+              Check Flight Price
             </a>
+
+            <Link
+              href="/tour-packages/"
+              className={cn(
+                buttonVariants({
+                  variant: "outlineLight",
+                  size: "lg",
+                }),
+                "hero-cta"
+              )}
+            >
+              Explore Holidays
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
           </div>
 
-          <div className="hero-trust mt-9 flex items-center gap-3 text-sm text-white/75">
+          {/* India-focused destinations */}
+          <div className="hero-trust mt-8 text-sm text-white/80">
+            <div className="mb-2 font-semibold text-white">
+              Popular from India
+            </div>
+
+            <div className="flex flex-wrap gap-x-4 gap-y-2">
+              <span>🇮🇳 Delhi → Dubai</span>
+              <span>🇮🇳 Delhi → Bali</span>
+              <span>🇮🇳 Delhi → Singapore</span>
+              <span>🇮🇳 Delhi → Goa</span>
+            </div>
+          </div>
+
+          {/* WhatsApp contact */}
+          <div className="hero-trust mt-5 flex items-center gap-3 text-sm text-white/75">
             <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_16px_rgba(52,211,153,.8)]" />
-            Live inventory · IATA verified · Support until you land
+
+            <span>
+              WhatsApp our travel experts:{" "}
+              <strong className="text-white">
+                +91 98762 60822
+              </strong>
+            </span>
           </div>
         </div>
 
+        {/* Existing Poster Carousel */}
         <div className="hero-cta relative hidden h-[440px] w-[300px] shrink-0 lg:block">
           <HeroPosterCarousel posters={posters} />
         </div>
