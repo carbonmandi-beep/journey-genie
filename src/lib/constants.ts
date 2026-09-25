@@ -38,22 +38,26 @@ export const PAYMENT = {
 
 export const OFFICES = {
   headOffice: {
-    label: "Delhi Office",
-    address:
-      "C-2/8, Street No. 2, Acharya Niketan, Mayur Vihar Phase-I, Delhi – 110091",
-    phone: "+91 98762 60822",
-    phoneTel: "+919876260822",
-    mapEmbed:
+  label: "Delhi Office",
+  address:
+    "C-2/8, Street No. 2, Acharya Niketan, Mayur Vihar Phase-I, Delhi – 110091",
+  phone: "+91 70117 60572",
+  phoneTel: "+917011760572",
+  phoneAlt: "",
+  phoneAltTel: "",
+  mapEmbed:
       "https://www.google.com/maps?q=C-2%2F8%2C%20Street%20No.%202%2C%20Acharya%20Niketan%2C%20Mayur%20Vihar%20Phase-I%2C%20Delhi%20110091&output=embed",
   },
 
-  islamabad: {
-    label: "Punjab Office — Amritsar",
-    address:
-      "Gumtala, Mirankot Road, Meerankot Chowk, Amritsar – 143001, Punjab",
-    phone: "+91 98762 60822",
-    phoneTel: "+919876260822",
-    mapEmbed:
+ islamabad: {
+  label: "Punjab Office — Amritsar",
+  address:
+    "Gumtala, Mirankot Road, Meerankot Chowk, Amritsar – 143001, Punjab",
+  phone: "+91 98762 60822",
+  phoneTel: "+919876260822",
+  phoneAlt: "",
+  phoneAltTel: "",
+  mapEmbed:
       "https://www.google.com/maps?q=Gumtala%2C%20Mirankot%20Road%2C%20Meerankot%20Chowk%2C%20Amritsar%20143001%2C%20Punjab&output=embed",
   },
 
