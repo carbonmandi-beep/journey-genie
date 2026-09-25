@@ -1,90 +1,45 @@
 /**
- * Central SEO copy for Al Qibla Air Services.
- * Titles stay readable; keywords cover ticket-booking search intents.
+ * Central SEO copy for Journey Genie.
+ * India-first travel agency for domestic and international travel.
  */
 
 export const SEO_KEYWORDS = [
-  // Core ticket booking
-  "ticket booking",
-  "ticket bookings",
-  "book tickets online",
-  "air ticket booking",
+  "Journey Genie",
+  "travel agency India",
+  "travel agency Delhi",
+  "travel agency Punjab",
+  "flight booking India",
   "flight ticket booking",
-  "airline ticket booking",
-  "cheap air tickets",
-  "domestic ticket booking",
-  "international ticket booking",
-  "online ticket booking Pakistan",
-  "flight booking Pakistan",
-  "air tickets Pakistan",
-  "book flight tickets",
-  "plane ticket booking",
-  // Umrah
-  "umrah tickets",
-  "umrah ticket booking",
-  "umrah packages",
-  "umrah packages Pakistan",
-  "umrah groups",
-  "cheap umrah packages",
-  "umrah from Pakistan",
-  "umrah from Peshawar",
-  "umrah from Islamabad",
-  "makkah madinah packages",
-  // Group travel
-  "group travel",
-  "group travels",
-  "group flights",
-  "group ticket booking",
-  "group air tickets",
-  "group fares",
-  "group travel packages",
-  "UAE group tickets",
-  "Oman group tickets",
-  "KSA group tickets",
-  "Bahrain group tickets",
-  "Jeddah tickets",
-  "Dubai tickets",
-  "Muscat tickets",
-  // Agent / B2B
-  "become travel agent",
-  "become ticket booking agent",
-  "travel agent Pakistan",
-  "sub agent ticket booking",
-  "B2B ticket booking",
-  "travel agency portal",
-  "agent air ticketing",
-  "wholesale group tickets",
-  // Brand + geo
-  "Al Qibla Air Services",
-  "AL QIBLA AIR SERVICES",
-  "Al Qibla tickets",
-  "travel agency in Peshawar",
-  "travel agency Peshawar",
-  "best travel agency Peshawar",
-  "air ticket booking Peshawar",
-  "ticket booking Peshawar",
-  "travel agency Islamabad",
-  "travel agency Bannu",
-  "IATA travel agent Pakistan",
-  "flywithalqibla",
-  // Adjacent services
-  "visit visa",
-  "Saudi visit visa",
-  "hotel booking",
+  "domestic flight booking",
+  "international flight booking",
+  "cheap flight booking",
+  "hotel booking India",
+  "holiday packages India",
+  "international holiday packages",
+  "domestic holiday packages",
+  "customized holiday packages",
+  "visa assistance India",
+  "travel assistance",
   "corporate travel",
-  "tour packages",
-  "travel insurance",
+  "family holidays",
+  "Dubai holidays",
+  "Bali holidays",
+  "Singapore holidays",
+  "Thailand holidays",
+  "Maldives holidays",
+  "Kashmir holidays",
+  "Goa holidays",
+  "Kerala holidays",
 ] as const;
 
 export const SEO_HOME_TITLE =
-  "Ticket Booking, Umrah Packages & Group Flights Pakistan";
+  "Journey Genie | Flights, Hotels, Holidays & Visa Assistance";
 
 export const SEO_HOME_DESCRIPTION =
-  "Travel agency in Peshawar — book air tickets, Umrah packages, group flights and tour packages online with AL QIBLA AIR SERVICES. Head office at Cantonment Plaza, Saddar Road, plus Islamabad & Bannu. Become a ticket booking agent on flywithalqibla.com.";
+  "Journey Genie is your magical travel partner for domestic and international flights, hotels, customized holiday packages and visa assistance.";
 
 export const SEO_DEFAULT_DESCRIPTION = SEO_HOME_DESCRIPTION;
 
-/** Page-level SEO presets used across routes. */
 export const PAGE_SEO = {
   home: {
     title: SEO_HOME_TITLE,
@@ -92,185 +47,225 @@ export const PAGE_SEO = {
     path: "/",
     keywords: [...SEO_KEYWORDS],
   },
+
   availableTickets: {
-    title: "Book Air Tickets Online | Live Group Flight Ticket Booking",
+    title: "Flight Booking | Domestic & International Flights | Journey Genie",
     description:
-      "Book air tickets online — domestic & international flight ticket booking with live seats and group fares. PIA, Saudia, Emirates, Airblue and more. Cheap ticket bookings for Jeddah, Dubai, Muscat, Bahrain and worldwide.",
+      "Explore domestic and international flight options with Journey Genie. Send us your travel details or a fare screenshot and our team will check the available options for you.",
     path: "/available-tickets/",
     keywords: [
-      "ticket booking",
-      "book air tickets online",
-      "flight ticket booking",
-      "group flight tickets",
-      "cheap air tickets Pakistan",
-      "available tickets",
-      "airline ticket booking",
-      "domestic ticket booking",
-      "international ticket booking",
+      "flight booking India",
+      "domestic flight booking",
+      "international flight booking",
+      "flight tickets",
+      "Journey Genie flights",
     ],
   },
+
   umrahPackages: {
-    title: "Umrah Packages & Umrah Ticket Booking from Pakistan",
+    title: "International Holiday Packages | Journey Genie",
     description:
-      "Book Umrah packages and Umrah tickets from Pakistan with hotels, flights and seat availability. Affordable Umrah ticket booking, Umrah groups and Makkah–Madinah packages from Peshawar, Islamabad and Bannu.",
+      "Explore international holiday experiences with Journey Genie, including flights, hotels, transfers and personalized travel assistance.",
     path: "/umrah-packages/",
     keywords: [
-      "umrah packages",
-      "umrah tickets",
-      "umrah ticket booking",
-      "umrah from Pakistan",
-      "cheap umrah packages",
-      "umrah groups",
-      "makkah madinah packages",
+      "international holidays",
+      "holiday packages",
+      "international travel",
+      "customized holidays",
     ],
   },
+
   groupFlights: {
-    title: "Group Flights & Group Travel Ticket Booking",
+    title: "Group Travel & Flight Assistance | Journey Genie",
     description:
-      "Book group flights and group travel tickets to UAE, Oman, KSA, Bahrain and Umrah groups. Live group fares, seat inventory and wholesale ticket booking for agents and travelers.",
+      "Journey Genie provides group travel and flight assistance for families, corporate groups, institutions and other travellers.",
     path: "/group-flights/",
     keywords: [
-      "group flights",
       "group travel",
-      "group travels",
-      "group ticket booking",
-      "group air tickets",
-      "group fares",
+      "group flights",
+      "group travel India",
+      "corporate group travel",
     ],
   },
+
   destinations: {
-    title: "Explore Destinations | Umrah, Group Tickets & Tours",
+    title: "Explore Destinations | Journey Genie",
     description:
-      "Explore Umrah packages, group ticket bookings and tours by destination — Saudi Arabia, UAE, Oman, Bahrain and more with Al Qibla Air Services.",
+      "Explore popular domestic and international destinations with Journey Genie and plan your next journey with personalized travel support.",
     path: "/destinations/",
-    keywords: ["umrah destinations", "group tickets by destination", "explore flights Pakistan"],
+    keywords: [
+      "travel destinations",
+      "India travel destinations",
+      "international destinations",
+      "holiday destinations",
+    ],
   },
+
   tours: {
-    title: "Tour Packages & Holiday Ticket Booking",
+    title: "Holiday Packages | Domestic & International | Journey Genie",
     description:
-      "Book tour packages and holiday travel with flight ticket booking — Dubai, Turkey, Malaysia and domestic tours from Al Qibla Air Services.",
+      "Discover customized domestic and international holiday packages with Journey Genie.",
     path: "/tours/",
-    keywords: ["tour packages", "holiday packages Pakistan", "tour ticket booking"],
+    keywords: [
+      "holiday packages",
+      "tour packages",
+      "India holidays",
+      "international holidays",
+      "customized holidays",
+    ],
   },
+
   tourPackages: {
-    title: "Holiday & Tour Packages | Book Travel Online",
+    title: "Holiday & Tour Packages | Journey Genie",
     description:
-      "Browse holiday and tour packages with ticket booking support — Dubai, Turkey, Malaysia and domestic destinations.",
+      "Browse domestic and international holiday packages with Journey Genie.",
     path: "/tour-packages/",
-    keywords: ["tour packages", "holiday packages", "book tours Pakistan"],
+    keywords: [
+      "holiday packages",
+      "tour packages",
+      "domestic holidays",
+      "international holidays",
+    ],
   },
+
   services: {
-    title: "Travel Services | Ticket Booking, Umrah, Visas & Hotels",
+    title: "Travel Services | Flights, Hotels, Holidays & Visa | Journey Genie",
     description:
-      "Full travel services: air ticket booking, Umrah packages, group travels, visit visas, hotels, travel insurance and corporate travel management across Pakistan and worldwide.",
+      "Explore Journey Genie travel services including flights, hotels, customized holidays and visa assistance.",
     path: "/services/",
     keywords: [
-      "travel services Pakistan",
-      "ticket booking services",
-      "umrah services",
-      "visa services",
-      "corporate travel",
+      "travel services India",
+      "flight booking",
+      "hotel booking",
+      "holiday packages",
+      "visa assistance",
     ],
   },
+
   portal: {
-    title: "Become a Ticket Booking Agent | Travel Agent Portal",
+    title: "Journey Genie | Travel Assistance",
     description:
-      "Become a ticket booking agent with Al Qibla Air Services. Access live group inventory, wholesale fares and B2B air ticketing through our sub-agent travel portal.",
+      "Travel assistance from Journey Genie for flights, hotels, holidays and selected travel services.",
     path: "/portal/",
     keywords: [
-      "become travel agent",
-      "become ticket booking agent",
-      "travel agent portal",
-      "sub agent ticket booking",
-      "B2B air ticketing",
+      "Journey Genie",
+      "travel assistance",
+      "travel services",
     ],
   },
+
   accountSignup: {
-    title: "Register as Travel Agent | Sub-Agent Ticket Booking Access",
+    title: "Journey Genie | Travel Enquiry",
     description:
-      "Create your sub-agent account for approved B2B ticket booking access — book group flights, Umrah tickets and wholesale air fares online.",
+      "Send your travel requirements to Journey Genie and connect with our travel team.",
     path: "/account/signup/",
     keywords: [
-      "become ticket booking agent",
-      "travel agency registration Pakistan",
-      "sub agent signup",
-      "B2B ticket booking",
+      "Journey Genie",
+      "travel enquiry",
+      "travel booking",
     ],
   },
+
   account: {
-    title: "Agent Portal | Live Ticket Booking Dashboard",
+    title: "Journey Genie | Travel Dashboard",
     description:
-      "Sign in to the Al Qibla agent portal for live ticket booking, group flights, Umrah inventory and booking management.",
+      "Journey Genie travel management and booking assistance.",
     path: "/account/",
-    keywords: ["travel agent portal", "ticket booking dashboard", "agent air ticketing"],
+    keywords: [
+      "Journey Genie",
+      "travel booking",
+      "travel dashboard",
+    ],
   },
+
   about: {
-    title: "About Al Qibla Air Services | Trusted Ticket Booking Agency",
+    title: "About Journey Genie | Your Magical Travel Partner",
     description:
-      "About Al Qibla Air Services — trusted ticket booking, Umrah packages and group travel agency with offices in Peshawar, Islamabad and Bannu. IATA-verified agents and verified client reviews.",
+      "Learn about Journey Genie, your magical travel partner for domestic and international flights, hotels, holidays and visa assistance.",
     path: "/about/",
     keywords: [
-      "Al Qibla Air Services",
-      "travel agency Peshawar",
-      "travel agency Islamabad",
-      "IATA travel agent",
+      "Journey Genie",
+      "about Journey Genie",
+      "travel agency India",
+      "travel agency Delhi",
     ],
   },
+
   contact: {
-    title: "Contact Travel Agency in Peshawar | WhatsApp & Offices",
+    title: "Contact Journey Genie | Travel Assistance",
     description:
-      "Contact AL QIBLA AIR SERVICES — travel agency in Peshawar at Cantonment Plaza, Saddar Road. WhatsApp support plus Islamabad & Bannu offices for ticket booking and Umrah.",
+      "Contact Journey Genie for domestic and international flights, hotels, holiday packages and visa assistance.",
     path: "/contact/",
     keywords: [
-      "travel agency in Peshawar contact",
-      "ticket booking WhatsApp",
-      "Cantonment Plaza travel agency",
-      "AL QIBLA AIR SERVICES phone",
+      "Journey Genie contact",
+      "travel agency Delhi contact",
+      "flight booking contact",
+      "holiday booking contact",
     ],
   },
+
   inquiry: {
-    title: "Book Tickets / Travel Inquiry | Instant WhatsApp Booking",
+    title: "Travel Inquiry | Journey Genie",
     description:
-      "Submit a ticket booking or travel inquiry — air tickets, Umrah tickets, group travels, visas and hotels. Fast WhatsApp confirmation with Al Qibla Air Services.",
+      "Send your travel requirements to Journey Genie for flights, hotels, holidays and visa assistance.",
     path: "/inquiry/",
-    keywords: ["book tickets inquiry", "travel inquiry Pakistan", "WhatsApp ticket booking"],
-  },
-  corporate: {
-    title: "Corporate Travel & Group Ticket Booking for Companies",
-    description:
-      "Corporate travel management and group ticket booking for companies and NGOs — dedicated support, consolidated billing and priority air ticketing.",
-    path: "/corporate-travel/",
-    keywords: ["corporate travel Pakistan", "NGO travel", "corporate ticket booking"],
-  },
-  flightBooking: {
-    title: "Flight Booking | Search & Book Group Air Tickets",
-    description:
-      "Search and book group air tickets online. Flight ticket booking with live inventory for Umrah, UAE, Oman, KSA and Bahrain routes.",
-    path: "/flight-booking/",
-    keywords: ["flight booking", "book group flights", "search air tickets"],
-  },
-  gallery: {
-    title: "Travel Gallery | Umrah & Group Travel Moments",
-    description:
-      "Photo gallery from Al Qibla Air Services — Umrah journeys, group travels and destinations.",
-    path: "/gallery/",
-    keywords: ["umrah gallery", "travel gallery Pakistan"],
-  },
-  travelAgencyPeshawar: {
-    title: "Travel Agency in Peshawar",
-    description:
-      "Looking for a travel agency in Peshawar? AL QIBLA AIR SERVICES at Cantonment Plaza, Saddar Road offers air ticketing, Umrah packages, group flights, visas and hotels. Book on flywithalqibla.com or WhatsApp.",
-    path: "/travel-agency-peshawar/",
     keywords: [
-      "travel agency in Peshawar",
-      "best travel agency Peshawar",
-      "air ticket booking Peshawar",
-      "Umrah packages Peshawar",
-      "AL QIBLA AIR SERVICES",
-      "travel agent Saddar Peshawar",
-      "group flights Peshawar",
-      "visa consultant Peshawar",
-      "flywithalqibla",
+      "travel inquiry",
+      "flight enquiry",
+      "holiday enquiry",
+      "Journey Genie WhatsApp",
+    ],
+  },
+
+  corporate: {
+    title: "Corporate Travel | Journey Genie",
+    description:
+      "Corporate travel assistance for companies, teams and organizations with Journey Genie.",
+    path: "/corporate-travel/",
+    keywords: [
+      "corporate travel India",
+      "business travel",
+      "corporate flight booking",
+      "corporate holidays",
+    ],
+  },
+
+  flightBooking: {
+    title: "Flight Booking | Journey Genie",
+    description:
+      "Plan domestic and international flights with Journey Genie and get personal travel assistance.",
+    path: "/flight-booking/",
+    keywords: [
+      "flight booking",
+      "flight tickets India",
+      "domestic flights",
+      "international flights",
+    ],
+  },
+
+  gallery: {
+    title: "Travel Gallery | Journey Genie",
+    description:
+      "Explore travel inspiration and destinations from Journey Genie.",
+    path: "/gallery/",
+    keywords: [
+      "travel gallery",
+      "travel inspiration",
+      "Journey Genie",
+    ],
+  },
+
+  travelAgencyPeshawar: {
+    title: "Journey Genie | Travel Agency India",
+    description:
+      "Journey Genie is your magical travel partner for flights, hotels, holiday packages and visa assistance.",
+    path: "/travel-agency/",
+    keywords: [
+      "Journey Genie",
+      "travel agency India",
+      "travel agency Delhi",
+      "flight booking India",
+      "holiday packages India",
     ],
   },
 } as const;
