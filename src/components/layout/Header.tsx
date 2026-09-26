@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { Menu, X, MessageCircle } from "lucide-react";
@@ -21,12 +22,22 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
       <div className="container-wide flex h-20 items-center justify-between">
-        {/* Brand */}
+        {/* Logo + Brand Name */}
         <Link
           href="/"
-          className="flex items-center"
+          className="flex items-center gap-3"
           onClick={() => setMobileOpen(false)}
         >
+          <Image
+            src="/assets/brand/journey-genie-logo.jpeg"
+            alt="Journey Genie"
+            width={72}
+            height={72}
+            className="h-14 w-14 object-contain sm:h-16 sm:w-16"
+            priority
+            unoptimized
+          />
+
           <span className="text-2xl font-bold tracking-tight text-primary sm:text-3xl">
             Journey Genie
           </span>
@@ -58,9 +69,15 @@ export function Header() {
         {/* Mobile Menu Button */}
         <button
           type="button"
-          aria-label={mobileOpen ? "Close menu" : "Open menu"}
+          aria-label={
+            mobileOpen
+              ? "Close menu"
+              : "Open menu"
+          }
           aria-expanded={mobileOpen}
-          onClick={() => setMobileOpen((open) => !open)}
+          onClick={() =>
+            setMobileOpen((open) => !open)
+          }
           className="inline-flex h-10 w-10 items-center justify-center rounded-md border lg:hidden"
         >
           {mobileOpen ? (
@@ -79,7 +96,9 @@ export function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                onClick={() => setMobileOpen(false)}
+                onClick={() =>
+                  setMobileOpen(false)
+                }
                 className="rounded-lg px-4 py-3 text-sm font-medium transition-colors hover:bg-muted hover:text-primary"
               >
                 {item.label}
@@ -90,7 +109,9 @@ export function Header() {
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => setMobileOpen(false)}
+              onClick={() =>
+                setMobileOpen(false)
+              }
               className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground"
             >
               <MessageCircle className="h-4 w-4" />
