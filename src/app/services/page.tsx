@@ -11,10 +11,11 @@ import {
 } from "lucide-react";
 
 import { PageHero } from "@/components/shared/PageHero";
-import { buttonVariants } from "@/components/ui/button";
 import { ASSETS } from "@/lib/assets";
 import { SITE } from "@/lib/constants";
-import { cn } from "@/lib/utils";
+
+const whatsappUrl =
+  "https://wa.me/919876260822?text=Hi%20Journey%20Genie,%20I%20need%20help%20with%20my%20travel%20booking.";
 
 const services = [
   {
@@ -36,7 +37,7 @@ const services = [
     title: "Hotels & Resorts",
     description:
       "Find hotels and resorts based on your destination, dates, preferences and budget.",
-    href: "/hotels/",
+    href: "/inquiry/",
   },
   {
     icon: Globe2,
@@ -50,7 +51,7 @@ const services = [
     title: "Visa Assistance",
     description:
       "Documentation and application assistance for selected international destinations.",
-    href: "/visa-assistance/",
+    href: "/inquiry/",
   },
   {
     icon: Users,
@@ -91,11 +92,9 @@ export const metadata = {
 };
 
 export default function ServicesPage() {
-  const whatsappUrl =
-    "https://wa.me/919876260822?text=Hi%20Journey%20Genie,%20I%20need%20help%20with%20my%20travel%20booking.";
-
   return (
     <>
+      {/* HERO */}
       <PageHero
         title="Travel Services"
         subtitle="Everything you need for your next journey — flights, hotels, holidays and visa assistance."
@@ -107,8 +106,10 @@ export default function ServicesPage() {
         }}
       />
 
+      {/* SERVICES */}
       <section className="section-padding bg-white">
         <div className="container-wide">
+
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-sm font-bold uppercase tracking-[0.2em] text-royal">
               What We Offer
@@ -119,8 +120,8 @@ export default function ServicesPage() {
             </h2>
 
             <p className="mt-5 text-base leading-8 text-muted-foreground md:text-lg">
-              Journey Genie brings your key travel requirements together in one
-              place, with personal assistance from enquiry to booking.
+              Journey Genie brings your key travel requirements together in
+              one place, with personal assistance from enquiry to booking.
             </p>
           </div>
 
@@ -154,11 +155,14 @@ export default function ServicesPage() {
               );
             })}
           </div>
+
         </div>
       </section>
 
+      {/* HOW IT WORKS */}
       <section className="section-padding bg-light-bg">
         <div className="container-wide">
+
           <div className="mx-auto max-w-2xl text-center">
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-gold">
               How It Works
@@ -194,12 +198,16 @@ export default function ServicesPage() {
               </div>
             ))}
           </div>
+
         </div>
       </section>
 
+      {/* FLIGHT FARE CTA */}
       <section className="section-padding bg-navy text-white">
         <div className="container-wide">
+
           <div className="mx-auto max-w-3xl text-center">
+
             <ShieldCheck className="mx-auto h-9 w-9 text-gold" />
 
             <h2 className="mt-5 font-heading text-3xl font-bold md:text-4xl">
@@ -214,8 +222,8 @@ export default function ServicesPage() {
             <a
               href={whatsappUrl}
               target="_blank"
-              rel="noreferrer"
-              className="mt-7 inline-flex items-center rounded-lg bg-gold px-6 py-3.5 font-bold text-navy transition hover:opacity-90"
+              rel="noopener noreferrer"
+              className="mt-7 inline-flex items-center rounded-lg bg-gold px-6 py-3.5 font-bold text-navy transition hover:bg-gold-light"
             >
               <MessageCircle className="mr-2 h-5 w-5" />
               Check With Journey Genie
@@ -224,7 +232,56 @@ export default function ServicesPage() {
             <p className="mt-4 text-sm text-white/50">
               WhatsApp: {SITE.whatsappNumber}
             </p>
+
           </div>
+
+        </div>
+      </section>
+
+      {/* FINAL CTA */}
+      <section className="section-padding bg-white">
+        <div className="container-wide">
+
+          <div className="rounded-[2rem] bg-gradient-to-r from-navy to-navy-light p-8 text-center text-white shadow-2xl sm:p-12">
+
+            <p className="text-sm font-bold uppercase tracking-[.22em] text-gold">
+              Your Magical Travel Partner
+            </p>
+
+            <h2 className="mx-auto mt-4 max-w-3xl text-3xl font-bold sm:text-4xl">
+              Tell us where you want to go.
+            </h2>
+
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-white/70 sm:text-base">
+              Whether you need a flight, hotel, holiday package, visa
+              assistance or corporate travel support, Journey Genie is here
+              to help.
+            </p>
+
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
+
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-12 items-center gap-2 rounded-xl bg-gold px-7 font-semibold text-navy transition hover:bg-gold-light"
+              >
+                WhatsApp Journey Genie
+                <MessageCircle className="h-4 w-4" />
+              </a>
+
+              <Link
+                href="/inquiry/"
+                className="inline-flex h-12 items-center gap-2 rounded-xl border border-white/20 bg-white/5 px-7 font-semibold text-white transition hover:bg-white/10"
+              >
+                Send an Enquiry
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+
+            </div>
+
+          </div>
+
         </div>
       </section>
     </>
