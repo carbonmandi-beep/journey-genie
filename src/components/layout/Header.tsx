@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
@@ -62,14 +63,15 @@ export function Header() {
             className="group flex shrink-0 items-center"
             aria-label="Journey Genie"
           >
-            <div className="leading-none">
-              <div className="font-heading text-2xl font-extrabold tracking-tight text-navy sm:text-3xl">
-                Journey <span className="text-royal">Genie</span>
-              </div>
-              <div className="mt-1 text-[9px] font-semibold uppercase tracking-[0.25em] text-slate-500 sm:text-[10px]">
-                Your Magical Travel Partner
-              </div>
-            </div>
+            <Image
+              src="/assets/brand/journey-genie-logo.jpeg"
+              alt="Journey Genie"
+              width={110}
+              height={110}
+              className="h-[62px] w-[62px] object-contain sm:h-[70px] sm:w-[70px] lg:h-[76px] lg:w-[76px]"
+              priority
+              unoptimized
+            />
           </Link>
 
           {/* Desktop Navigation */}
@@ -133,8 +135,19 @@ export function Header() {
                 className="w-[min(100vw-1.5rem,360px)] overflow-y-auto border-l border-white/10 bg-navy text-white"
               >
                 <SheetHeader>
-                  <SheetTitle className="text-left font-heading text-2xl font-bold text-white">
-                    Journey <span className="text-gold">Genie</span>
+                  <SheetTitle className="flex items-center gap-3 text-left">
+                    <Image
+                      src="/assets/brand/journey-genie-logo.jpeg"
+                      alt="Journey Genie"
+                      width={70}
+                      height={70}
+                      className="h-14 w-14 object-contain"
+                      unoptimized
+                    />
+
+                    <span className="font-heading text-2xl font-bold text-white">
+                      Journey <span className="text-gold">Genie</span>
+                    </span>
                   </SheetTitle>
 
                   <p className="text-left text-xs font-medium uppercase tracking-[0.2em] text-white/60">
