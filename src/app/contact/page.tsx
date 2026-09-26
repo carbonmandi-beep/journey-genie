@@ -3,7 +3,11 @@ import { PAGE_SEO } from "@/lib/seo";
 import { ContactForm } from "@/components/shared/ContactForm";
 import { PageHero } from "@/components/shared/PageHero";
 import { PAGE_HEROES } from "@/lib/page-heroes";
-import { OFFICE_DISPLAY_ORDER, SITE } from "@/lib/constants";
+import {
+  OFFICE_DISPLAY_ORDER,
+  SITE,
+  SOCIAL,
+} from "@/lib/constants";
 import { InstagramIcon } from "@/components/shared/SocialIcons";
 import {
   MapPin,
@@ -144,7 +148,7 @@ export default function ContactPage() {
                 <div className="mt-6 flex gap-3">
 
                   <a
-                    href={SITE.instagram}
+                    href={SOCIAL.instagram}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Instagram"
@@ -154,7 +158,7 @@ export default function ContactPage() {
                   </a>
 
                   <a
-                    href={SITE.linkedin}
+                    href={SOCIAL.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="LinkedIn"
@@ -283,7 +287,7 @@ export default function ContactPage() {
               </a>
 
               <a
-                href="tel:+919876260822"
+                href={`tel:${SITE.whatsappNumber.replace(/\s+/g, "")}`}
                 className="inline-flex h-12 items-center gap-2 rounded-xl border border-white/20 bg-white/5 px-7 font-semibold text-white transition hover:bg-white/10"
               >
                 Call Us
