@@ -1,22 +1,101 @@
 import type { Ticket, TicketFilters } from "@/types";
 import { cityMatchesFilter } from "@/lib/airport-codes";
 
-export function filterTickets(tickets: Ticket[], filters: TicketFilters): Ticket[] {
+export function filterTickets(
+  tickets: Ticket[],
+  filters: TicketFilters
+): Ticket[] {
   let result = tickets.filter((ticket) => {
-    if (filters.airline && filters.airline !== "all" && ticket.airlineCode !== filters.airline) return false;
-    if (filters.sector && filters.sector !== "all" && ticket.sector !== filters.sector) return false;
-    if (filters.fromCity && filters.fromCity !== "all" && !cityMatchesFilter(ticket.from, ticket.fromCity, filters.fromCity)) return false;
-    if (filters.toCity && filters.toCity !== "all" && !cityMatchesFilter(ticket.to, ticket.toCity, filters.toCity)) return false;
-    if (filters.destination && filters.destination !== "all" && ticket.destination !== filters.destination) return false;
-    if (filters.date && ticket.date !== filters.date) return false;
-    if (filters.maxPrice !== undefined && ticket.price > filters.maxPrice) return false;
-    if (filters.minPrice !== undefined && ticket.price < filters.minPrice) return false;
-    if (filters.minSeats !== undefined && ticket.seatsLeft < filters.minSeats) return false;
-    if (filters.tripType && filters.tripType !== "all" && ticket.tripType !== filters.tripType) return false;
-    if (filters.isDirect === true && ticket.isDirect === false) return false;
-    if (filters.groupCategory && ticket.groupCategory !== filters.groupCategory) return false;
+    if (
+      filters.airline &&
+      filters.airline !== "all" &&
+      ticket.airlineCode !== filters.airline
+    ) {
+      return false;
+    }
+
+    if (
+      filters.sector &&
+      filters.sector !== "all" &&
+      ticket.sector !== filters.sector
+    ) {
+      return false;
+    }
+
+    if (
+      filters.fromCity &&
+      filters.fromCity !== "all" &&
+      !cityMatchesFilter(ticket.from, filters.fromCity)
+    ) {
+      return false;
+    }
+
+    if (
+      filters.toCity &&
+      filters.toCity !== "all" &&
+      !cityMatchesFilter(ticket.to, filters.toCity)
+    ) {
+      return false;
+    }
+
+    if (
+      filters.destination &&
+      filters.destination !== "all" &&
+      ticket.destination !== filters.destination
+    ) {
+      return false;
+    }
+
+    if (filters.date && ticket.date !== filters.date) {
+      return false;
+    }
+
+    if (
+      filters.maxPrice !== undefined &&
+      ticket.price > filters.maxPrice
+    ) {
+      return false;
+    }
+
+    if (
+      filters.minPrice !== undefined &&
+      ticket.price < filters.minPrice
+    ) {
+      return false;
+    }
+
+    if (
+      filters.minSeats !== undefined &&
+      ticket.seatsLeft < filters.minSeats
+    ) {
+      return false;
+    }
+
+    if (
+      filters.tripType &&
+      filters.tripType !== "all" &&
+      ticket.tripType !== filters.tripType
+    ) {
+      return false;
+    }
+
+    if (
+      filters.isDirect === true &&
+      ticket.isDirect === false
+    ) {
+      return false;
+    }
+
+    if (
+      filters.groupCategory &&
+      ticket.groupCategory !== filters.groupCategory
+    ) {
+      return false;
+    }
+
     if (filters.search) {
       const q = filters.search.toLowerCase();
+
       const haystack = [
         ticket.airline,
         ticket.flightNumber,
@@ -28,38 +107,83 @@ export function filterTickets(tickets: Ticket[], filters: TicketFilters): Ticket
       ]
         .join(" ")
         .toLowerCase();
-      if (!haystack.includes(q)) return false;
+
+      if (!haystack.includes(q)) {
+        return false;
+      }
     }
+
     return true;
   });
 
-  if (filters.sortBy === "price") result = [...result].sort((a, b) => a.price - b.price);
-  else if (filters.sortBy === "seats") result = [...result].sort((a, b) => b.seatsLeft - a.seatsLeft);
-  // Default: earliest departure first, like the Travel Line portal
-  else result = [...result].sort((a, b) => a.date.localeCompare(b.date) || a.departureTime.localeCompare(b.departureTime));
+  if (filters.sortBy === "price") {
+    result = [...result].sort(
+      (a, b) => a.price - b.price
+    );
+  } else if (filters.sortBy === "seats") {
+    result = [...result].sort(
+      (a, b) => b.seatsLeft - a.seatsLeft
+    );
+  } else {
+    // Default: earliest departure first, like the Travel Line portal
+    result = [...result].sort(
+      (a, b) =>
+        a.date.localeCompare(b.date) ||
+        a.departureTime.localeCompare(b.departureTime)
+    );
+  }
 
   return result;
 }
 
 export function getUniqueFilterOptions(tickets: Ticket[]) {
   return {
-    airlines: [...new Set(tickets.map((t) => t.airlineCode))].sort(),
-    sectors: [...new Set(tickets.map((t) => t.sector))].sort(),
-    fromCities: [...new Set(tickets.map((t) => t.fromCity))].sort(),
-    toCities: [...new Set(tickets.map((t) => t.toCity))].sort(),
-    destinations: [...new Set(tickets.map((t) => t.destination))].sort(),
-    dates: [...new Set(tickets.map((t) => t.date))].sort(),
+    airlines: [
+      ...new Set(tickets.map((t) => t.airlineCode)),
+    ].sort(),
+
+    sectors: [
+      ...new Set(tickets.map((t) => t.sector)),
+    ].sort(),
+
+    fromCities: [
+      ...new Set(tickets.map((t) => t.fromCity)),
+    ].sort(),
+
+    toCities: [
+      ...new Set(tickets.map((t) => t.toCity)),
+    ].sort(),
+
+    destinations: [
+      ...new Set(tickets.map((t) => t.destination)),
+    ].sort(),
+
+    dates: [
+      ...new Set(tickets.map((t) => t.date)),
+    ].sort(),
   };
 }
 
-export function formatPrice(price: number, currency: string): string {
-  return `${currency} ${price.toLocaleString("en-PK", { maximumFractionDigits: 0 })}`;
+export function formatPrice(
+  price: number,
+  currency: string
+): string {
+  return `${currency} ${price.toLocaleString("en-PK", {
+    maximumFractionDigits: 0,
+  })}`;
 }
 
 /** Stable date label for SSR + client (Asia/Karachi). */
 export function formatTicketDate(iso: string): string {
-  const [y, m, d] = iso.split("T")[0].split("-").map(Number);
-  const date = new Date(Date.UTC(y, m - 1, d));
+  const [y, m, d] = iso
+    .split("T")[0]
+    .split("-")
+    .map(Number);
+
+  const date = new Date(
+    Date.UTC(y, m - 1, d)
+  );
+
   return date.toLocaleDateString("en-PK", {
     weekday: "short",
     day: "numeric",
@@ -70,5 +194,8 @@ export function formatTicketDate(iso: string): string {
 }
 
 export function formatSyncTime(iso: string): string {
-  return new Date(iso).toLocaleString("en-PK", { dateStyle: "medium", timeStyle: "short" });
+  return new Date(iso).toLocaleString("en-PK", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  });
 }
