@@ -121,14 +121,14 @@ export function Footer() {
           {/* Brand */}
           <GsapStaggerItem>
             <Link href="/" className="inline-flex items-center gap-3">
-              <Image
-                src={assetPath(LOGO_PATH)}
-                alt={SITE.name}
-                width={64}
-                height={64}
-                className="h-12 w-12 object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,.35)]"
-                unoptimized
-              />
+             <Image
+  src="/assets/brand/journey-genie-logo.jpeg"
+  alt="Journey Genie"
+  width={100}
+  height={100}
+  className="h-16 w-16 object-contain"
+  unoptimized
+/>
 
               <div>
                 <p className="font-brand text-xl font-bold leading-tight">
