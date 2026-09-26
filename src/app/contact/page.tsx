@@ -3,9 +3,17 @@ import { PAGE_SEO } from "@/lib/seo";
 import { ContactForm } from "@/components/shared/ContactForm";
 import { PageHero } from "@/components/shared/PageHero";
 import { PAGE_HEROES } from "@/lib/page-heroes";
-import { OFFICE_DISPLAY_ORDER, SITE, SOCIAL } from "@/lib/constants";
-import { FacebookIcon, InstagramIcon } from "@/components/shared/SocialIcons";
-import { MapPin, MessageCircle, Phone, Mail, Clock } from "lucide-react";
+import { OFFICE_DISPLAY_ORDER, SITE } from "@/lib/constants";
+import { InstagramIcon, LinkedinIcon } from "@/components/shared/SocialIcons";
+import {
+  MapPin,
+  MessageCircle,
+  Phone,
+  Mail,
+  Clock,
+  Plane,
+  ArrowRight,
+} from "lucide-react";
 
 export const metadata = createPageMetadata({
   title: PAGE_SEO.contact.title,
@@ -14,72 +22,260 @@ export const metadata = createPageMetadata({
   keywords: PAGE_SEO.contact.keywords,
 });
 
-function TwitterIcon({ className = "h-4 w-4" }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>
-  );
-}
-
 export default function ContactPage() {
   return (
     <>
       <PageHero {...PAGE_HEROES.contact} />
 
+      {/* CONTACT INFORMATION */}
       <section className="section-padding relative overflow-hidden bg-light-bg">
         <div className="absolute inset-0 opacity-[0.03] [background-image:radial-gradient(var(--navy)_1px,transparent_1px)] [background-size:22px_22px]" />
+
         <div className="container-wide">
           <div className="relative grid gap-10 lg:grid-cols-[.85fr_1.15fr] lg:items-start">
+
+            {/* LEFT SIDE */}
             <div className="space-y-6">
+
               {OFFICE_DISPLAY_ORDER.map((office) => (
-                <div key={office.label} className="group rounded-2xl border border-border/60 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-gold/40 hover:shadow-lg">
-                  <h2 className="font-heading text-lg font-semibold text-navy">{office.label}</h2>
-                  <p className="mt-2 flex items-start gap-2 text-sm text-muted-foreground">
-                    <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gold" /> {office.address}
+                <div
+                  key={office.label}
+                  className="group rounded-2xl border border-border/60 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-gold/40 hover:shadow-lg"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-navy text-gold">
+                      <MapPin className="h-5 w-5" />
+                    </div>
+
+                    <h2 className="font-heading text-lg font-semibold text-navy">
+                      {office.label}
+                    </h2>
+                  </div>
+
+                  <p className="mt-4 flex items-start gap-2 text-sm leading-6 text-muted-foreground">
+                    <MapPin className="mt-1 h-4 w-4 shrink-0 text-gold" />
+                    {office.address}
                   </p>
-                  <a href={`tel:${office.phoneTel}`} className="mt-2 flex items-center gap-2 text-sm hover:text-gold">
-                    <Phone className="h-4 w-4 text-gold" /> {office.phone}
+
+                  <a
+                    href={`tel:${office.phoneTel}`}
+                    className="mt-3 flex items-center gap-2 text-sm font-semibold text-navy transition hover:text-gold"
+                  >
+                    <Phone className="h-4 w-4 text-gold" />
+                    {office.phone}
                   </a>
+
                   {"phoneAlt" in office && office.phoneAlt && (
-                    <a href={`tel:${office.phoneAltTel}`} className="mt-1 flex items-center gap-2 text-sm hover:text-gold">
-                      <Phone className="h-4 w-4 text-gold" /> {office.phoneAlt}
+                    <a
+                      href={`tel:${office.phoneAltTel}`}
+                      className="mt-2 flex items-center gap-2 text-sm font-semibold text-navy transition hover:text-gold"
+                    >
+                      <Phone className="h-4 w-4 text-gold" />
+                      {office.phoneAlt}
                     </a>
                   )}
                 </div>
               ))}
 
-              <div className="rounded-2xl border border-border/60 bg-white p-6">
-                <h2 className="font-heading text-lg font-semibold text-navy">Connect With Us</h2>
-                <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
-                  <li className="flex items-center gap-2"><Mail className="h-4 w-4 text-gold" /><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
-                  <li className="flex items-center gap-2"><MessageCircle className="h-4 w-4 text-gold" /><a href={SITE.whatsapp}>WhatsApp: {SITE.whatsappNumber}</a></li>
-                  <li className="flex items-center gap-2"><Clock className="h-4 w-4 text-gold" />{SITE.businessHours}</li>
-                </ul>
-                <div className="mt-4 flex gap-3">
-                  {[
-                    { href: SOCIAL.facebook, Icon: FacebookIcon, label: "Facebook" },
-                    { href: SOCIAL.facebookGroup, Icon: FacebookIcon, label: "Group" },
-                    { href: SOCIAL.instagram, Icon: InstagramIcon, label: "Instagram" },
-                    { href: SOCIAL.twitter, Icon: TwitterIcon, label: "X" },
-                    { href: SOCIAL.whatsapp, Icon: MessageCircle, label: "WhatsApp" },
-                  ].map(({ href, Icon, label }) => (
-                    <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="flex h-10 w-10 items-center justify-center rounded-full border hover:border-gold hover:text-gold">
-                      <Icon className="h-4 w-4" />
+              {/* CONNECT WITH US */}
+              <div className="rounded-2xl border border-border/60 bg-white p-6 shadow-sm">
+
+                <div className="flex items-center gap-3">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-navy text-gold">
+                    <MessageCircle className="h-5 w-5" />
+                  </div>
+
+                  <h2 className="font-heading text-lg font-semibold text-navy">
+                    Connect With Journey Genie
+                  </h2>
+                </div>
+
+                <ul className="mt-5 space-y-4 text-sm text-muted-foreground">
+
+                  <li className="flex items-center gap-3">
+                    <Mail className="h-4 w-4 shrink-0 text-gold" />
+                    <a
+                      href={`mailto:${SITE.email}`}
+                      className="transition hover:text-gold"
+                    >
+                      {SITE.email}
                     </a>
-                  ))}
+                  </li>
+
+                  <li className="flex items-center gap-3">
+                    <MessageCircle className="h-4 w-4 shrink-0 text-gold" />
+
+                    <a
+                      href={SITE.whatsapp}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-semibold text-navy transition hover:text-gold"
+                    >
+                      WhatsApp: {SITE.whatsappNumber}
+                    </a>
+                  </li>
+
+                  <li className="flex items-center gap-3">
+                    <Clock className="h-4 w-4 shrink-0 text-gold" />
+                    {SITE.businessHours}
+                  </li>
+
+                </ul>
+
+                {/* SOCIAL */}
+                <div className="mt-6 flex gap-3">
+
+                  <a
+                    href={SITE.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Instagram"
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-border transition hover:border-gold hover:text-gold"
+                  >
+                    <InstagramIcon className="h-4 w-4" />
+                  </a>
+
+                  <a
+                    href={SITE.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="LinkedIn"
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-border transition hover:border-gold hover:text-gold"
+                  >
+                    <LinkedinIcon className="h-4 w-4" />
+                  </a>
+
+                  <a
+                    href={SITE.whatsapp}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="WhatsApp"
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-border transition hover:border-gold hover:text-gold"
+                  >
+                    <MessageCircle className="h-4 w-4" />
+                  </a>
+
                 </div>
               </div>
+
+              {/* WHATSAPP CTA */}
+              <div className="overflow-hidden rounded-2xl bg-gradient-to-br from-navy to-navy-light p-7 text-white shadow-xl">
+
+                <Plane className="h-9 w-9 text-gold" />
+
+                <h2 className="mt-5 text-2xl font-bold">
+                  Planning your next journey?
+                </h2>
+
+                <p className="mt-3 text-sm leading-6 text-white/70">
+                  Send us your travel requirement on WhatsApp and our team
+                  will help you explore the available options.
+                </p>
+
+                <a
+                  href={SITE.whatsapp}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-6 inline-flex h-11 items-center gap-2 rounded-xl bg-gold px-5 text-sm font-semibold text-navy transition hover:bg-gold-light"
+                >
+                  Chat on WhatsApp
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+
+              </div>
+
             </div>
+
+            {/* CONTACT FORM */}
             <ContactForm />
+
           </div>
 
-          <div className="relative mt-14 grid gap-5 lg:grid-cols-3">
+          {/* MAPS */}
+          <div className="relative mt-14 grid gap-5 lg:grid-cols-2">
+
             {OFFICE_DISPLAY_ORDER.map((office, index) => (
-              <article key={office.label} className={`overflow-hidden rounded-3xl border bg-white shadow-[0_18px_50px_rgba(25,45,65,.09)] ${index === 1 ? "border-gold/50 lg:-translate-y-3" : "border-white"}`}>
-                <div className="p-5"><p className="text-[10px] font-bold uppercase tracking-[.18em] text-gold">{index === 1 ? "Main office" : "Branch office"}</p><h2 className="mt-1 font-heading text-xl font-semibold text-navy">{office.label}</h2></div>
-                <iframe src={office.mapEmbed} className="h-72 w-full border-0" allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" title={`${office.label} map`} />
+              <article
+                key={office.label}
+                className="overflow-hidden rounded-3xl border border-border bg-white shadow-[0_18px_50px_rgba(25,45,65,.09)]"
+              >
+
+                <div className="p-5">
+
+                  <p className="text-[10px] font-bold uppercase tracking-[.18em] text-gold">
+                    {index === 0 ? "Head Office" : "Office"}
+                  </p>
+
+                  <h2 className="mt-1 font-heading text-xl font-semibold text-navy">
+                    {office.label}
+                  </h2>
+
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                    {office.address}
+                  </p>
+
+                </div>
+
+                <iframe
+                  src={office.mapEmbed}
+                  className="h-72 w-full border-0"
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title={`${office.label} map`}
+                />
+
               </article>
             ))}
+
           </div>
+
+        </div>
+      </section>
+
+      {/* FINAL CTA */}
+      <section className="section-padding bg-navy text-white">
+        <div className="container-wide">
+
+          <div className="mx-auto max-w-3xl text-center">
+
+            <p className="text-sm font-bold uppercase tracking-[.22em] text-gold">
+              Your Magical Travel Partner
+            </p>
+
+            <h2 className="mt-4 text-3xl font-bold sm:text-4xl">
+              Before you book, check with Journey Genie.
+            </h2>
+
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-white/70 sm:text-base">
+              Flights, hotels, holiday packages and visa assistance —
+              tell us what you need and let our travel team help you plan it.
+            </p>
+
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
+
+              <a
+                href={SITE.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-12 items-center gap-2 rounded-xl bg-gold px-7 font-semibold text-navy transition hover:bg-gold-light"
+              >
+                WhatsApp Journey Genie
+                <MessageCircle className="h-4 w-4" />
+              </a>
+
+              <a
+                href="tel:+919876260822"
+                className="inline-flex h-12 items-center gap-2 rounded-xl border border-white/20 bg-white/5 px-7 font-semibold text-white transition hover:bg-white/10"
+              >
+                Call Us
+                <Phone className="h-4 w-4" />
+              </a>
+
+            </div>
+
+          </div>
+
         </div>
       </section>
     </>
