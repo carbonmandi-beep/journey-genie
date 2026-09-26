@@ -23,7 +23,7 @@ export const metadata = createPageMetadata({
   title: PAGE_SEO.contact.title,
   description: PAGE_SEO.contact.description,
   path: PAGE_SEO.contact.path,
-  keywords: PAGE_SEO.contact.keywords,
+  keywords: PAGE_SEO.contact.keywords, 
 });
 
 function LinkedinIcon({
