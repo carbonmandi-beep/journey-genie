@@ -1,1 +1,359 @@
+import Link from "next/link";
+import {
+  ArrowRight,
+  BedDouble,
+  CheckCircle2,
+  Globe2,
+  Hotel,
+  MessageCircle,
+  MapPin,
+  ShieldCheck,
+  Sparkles,
+  Users,
+} from "lucide-react";
 
+import { PageHero } from "@/components/shared/PageHero";
+import { ASSETS } from "@/lib/assets";
+import { SITE } from "@/lib/constants";
+
+const whatsappUrl =
+  "https://wa.me/919876260822?text=Hi%20Journey%20Genie,%20I%20need%20help%20finding%20a%20hotel.";
+
+const hotelServices = [
+  {
+    icon: Hotel,
+    title: "Hotels & Resorts",
+    text: "Tell us your destination and dates and our team can help you explore suitable hotel and resort options.",
+  },
+  {
+    icon: Globe2,
+    title: "Domestic & International",
+    text: "Find accommodation for trips across India as well as international destinations.",
+  },
+  {
+    icon: Users,
+    title: "Family & Group Stays",
+    text: "We can help families, couples and groups plan accommodation around their complete journey.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Travel Support",
+    text: "Get personal assistance while coordinating your hotel requirements with flights and holidays.",
+  },
+];
+
+const popularDestinations = [
+  "Dubai",
+  "Bali",
+  "Singapore",
+  "Thailand",
+  "Maldives",
+  "Goa",
+  "Kashmir",
+  "Kerala",
+];
+
+const process = [
+  {
+    number: "01",
+    title: "Tell Us Where You're Going",
+    text: "Share your destination, travel dates and number of travellers.",
+  },
+  {
+    number: "02",
+    title: "Tell Us Your Preference",
+    text: "Let us know your budget, hotel category and preferred location.",
+  },
+  {
+    number: "03",
+    title: "Explore Available Options",
+    text: "Our travel team checks suitable accommodation options for your trip.",
+  },
+  {
+    number: "04",
+    title: "Confirm Your Stay",
+    text: "Choose the option that works for you and proceed with your booking.",
+  },
+];
+
+export const metadata = {
+  title: "Hotels & Resorts | Journey Genie",
+  description:
+    "Find hotels and resorts in India and worldwide with Journey Genie. Get personalized assistance for family, couple, group and business travel.",
+};
+
+export default function HotelsPage() {
+  return (
+    <>
+      {/* HERO */}
+      <PageHero
+        title="Hotels & Resorts"
+        subtitle="Find the right place to stay for your next journey, with personal assistance from Journey Genie."
+        backgroundImage={ASSETS.heroes.services}
+        badge="Journey Genie Hotels"
+        cta={{
+          label: "Find My Hotel",
+          href: whatsappUrl,
+        }}
+      />
+
+      {/* INTRO */}
+      <section className="section-padding bg-white">
+        <div className="container-wide">
+
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="text-sm font-bold uppercase tracking-[0.2em] text-royal">
+              Stay Your Way
+            </p>
+
+            <h2 className="mt-3 font-heading text-3xl font-bold text-navy md:text-4xl">
+              Hotels that fit your journey
+            </h2>
+
+            <p className="mt-5 text-base leading-8 text-muted-foreground md:text-lg">
+              Whether you're planning a family holiday, a romantic getaway,
+              a business trip or a group journey, Journey Genie can help you
+              explore accommodation options that match your plans.
+            </p>
+          </div>
+
+          {/* SERVICES */}
+          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+            {hotelServices.map((service) => {
+              const Icon = service.icon;
+
+              return (
+                <article
+                  key={service.title}
+                  className="rounded-2xl border border-border/70 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-gold/40 hover:shadow-xl"
+                >
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-navy text-gold">
+                    <Icon className="h-6 w-6" />
+                  </div>
+
+                  <h3 className="mt-5 font-heading text-lg font-bold text-navy">
+                    {service.title}
+                  </h3>
+
+                  <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                    {service.text}
+                  </p>
+                </article>
+              );
+            })}
+          </div>
+
+        </div>
+      </section>
+
+      {/* DESTINATIONS */}
+      <section className="section-padding bg-light-bg">
+        <div className="container-wide">
+
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-gold">
+              Popular Destinations
+            </p>
+
+            <h2 className="mt-3 font-heading text-3xl font-bold text-navy md:text-4xl">
+              Where are you planning to stay?
+            </h2>
+
+            <p className="mt-4 text-muted-foreground">
+              Tell us your destination and our team can help you explore
+              suitable accommodation options.
+            </p>
+          </div>
+
+          <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
+            {popularDestinations.map((destination) => (
+              <a
+                key={destination}
+                href={`${whatsappUrl}&text=Hi%20Journey%20Genie,%20I%20am%20looking%20for%20a%20hotel%20in%20${encodeURIComponent(destination)}.`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-3 rounded-2xl border border-border/70 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:border-gold/50 hover:shadow-lg"
+              >
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-navy text-gold">
+                  <MapPin className="h-5 w-5" />
+                </div>
+
+                <span className="font-semibold text-navy">
+                  {destination}
+                </span>
+
+                <ArrowRight className="ml-auto h-4 w-4 text-muted-foreground transition group-hover:translate-x-1 group-hover:text-gold" />
+              </a>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
+      {/* HOW IT WORKS */}
+      <section className="section-padding bg-white">
+        <div className="container-wide">
+
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-gold">
+              How It Works
+            </p>
+
+            <h2 className="mt-3 font-heading text-3xl font-bold text-navy md:text-4xl">
+              Finding your stay is simple
+            </h2>
+
+            <p className="mt-4 text-muted-foreground">
+              Share your requirement and let Journey Genie help you explore
+              the available options.
+            </p>
+          </div>
+
+          <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+            {process.map((item) => (
+              <article
+                key={item.number}
+                className="rounded-2xl border border-border/70 bg-white p-6 shadow-sm"
+              >
+                <div className="text-sm font-black tracking-widest text-gold">
+                  {item.number}
+                </div>
+
+                <h3 className="mt-4 font-heading text-lg font-bold text-navy">
+                  {item.title}
+                </h3>
+
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                  {item.text}
+                </p>
+              </article>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
+      {/* WHY JOURNEY GENIE */}
+      <section className="section-padding bg-navy text-white">
+        <div className="container-wide">
+
+          <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
+
+            <div>
+              <p className="text-sm font-bold uppercase tracking-[0.2em] text-gold">
+                Why Book With Us
+              </p>
+
+              <h2 className="mt-4 font-heading text-3xl font-bold md:text-4xl">
+                More than just a hotel booking
+              </h2>
+
+              <p className="mt-5 leading-8 text-white/70">
+                Your accommodation is one part of the complete journey.
+                Journey Genie can help coordinate your stay alongside flights,
+                holiday planning and other travel requirements.
+              </p>
+
+              <div className="mt-7 space-y-4">
+                {[
+                  "Personal travel assistance",
+                  "Domestic & international destinations",
+                  "Family, couple, group and business travel",
+                  "Hotel planning around your complete itinerary",
+                ].map((item) => (
+                  <div
+                    key={item}
+                    className="flex items-center gap-3 text-sm font-medium"
+                  >
+                    <CheckCircle2 className="h-5 w-5 shrink-0 text-gold" />
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-[2rem] border border-white/10 bg-white/5 p-8 backdrop-blur">
+
+              <Sparkles className="h-9 w-9 text-gold" />
+
+              <h3 className="mt-5 text-2xl font-bold">
+                Looking for a hotel?
+              </h3>
+
+              <p className="mt-3 text-sm leading-7 text-white/70">
+                Send us your destination, dates, number of travellers and
+                preferred hotel category. Our team will help you explore the
+                available options.
+              </p>
+
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-7 inline-flex items-center gap-2 rounded-xl bg-gold px-6 py-3.5 font-bold text-navy transition hover:bg-gold-light"
+              >
+                <MessageCircle className="h-5 w-5" />
+                Find My Hotel
+              </a>
+
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      {/* FINAL CTA */}
+      <section className="section-padding bg-white">
+        <div className="container-wide">
+
+          <div className="rounded-[2rem] bg-gradient-to-r from-navy to-navy-light p-8 text-center text-white shadow-2xl sm:p-12">
+
+            <BedDouble className="mx-auto h-10 w-10 text-gold" />
+
+            <p className="mt-5 text-sm font-bold uppercase tracking-[0.22em] text-gold">
+              Your Magical Travel Partner
+            </p>
+
+            <h2 className="mx-auto mt-4 max-w-3xl text-3xl font-bold sm:text-4xl">
+              Tell us where you're staying.
+            </h2>
+
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-white/70 sm:text-base">
+              Share your destination and travel dates with Journey Genie and
+              let our team help you plan your stay.
+            </p>
+
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
+
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-12 items-center gap-2 rounded-xl bg-gold px-7 font-semibold text-navy transition hover:bg-gold-light"
+              >
+                WhatsApp Journey Genie
+                <MessageCircle className="h-4 w-4" />
+              </a>
+
+              <Link
+                href="/inquiry/"
+                className="inline-flex h-12 items-center gap-2 rounded-xl border border-white/20 bg-white/5 px-7 font-semibold text-white transition hover:bg-white/10"
+              >
+                Send an Enquiry
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+
+            </div>
+
+            <p className="mt-5 text-sm text-white/50">
+              WhatsApp: {SITE.whatsappNumber}
+            </p>
+
+          </div>
+
+        </div>
+      </section>
+    </>
+  );
+}
