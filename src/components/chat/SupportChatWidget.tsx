@@ -10,8 +10,7 @@ import {
   X,
 } from "lucide-react";
 import { WhatsAppIcon } from "@/components/shared/SocialIcons";
-import { LOGO_NAV_PATH, SITE } from "@/lib/constants";
-import { assetPath } from "@/lib/base-path";
+import { SITE } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 type Msg = {
@@ -37,15 +36,12 @@ export function SupportChatWidget() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [messages, setMessages] =
-    useState<Msg[]>([STARTER]);
+  const [messages, setMessages] = useState<Msg[]>([STARTER]);
   const [error, setError] = useState("");
 
-  const listRef =
-    useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
 
-  const showSuggestions =
-    messages.length <= 1 && !loading;
+  const showSuggestions = messages.length <= 1 && !loading;
 
   useEffect(() => {
     const openChat = () => setOpen(true);
@@ -90,19 +86,15 @@ export function SupportChatWidget() {
     setError("");
 
     try {
-      const res = await fetch(
-        "/api/chat/support/",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type":
-              "application/json",
-          },
-          body: JSON.stringify({
-            messages: nextMessages,
-          }),
-        }
-      );
+      const res = await fetch("/api/chat/support/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          messages: nextMessages,
+        }),
+      });
 
       const json = await res.json();
 
@@ -149,6 +141,7 @@ export function SupportChatWidget() {
     >
       {open && (
         <div className="flex h-[min(74vh,620px)] w-[min(100vw-1.25rem,400px)] flex-col overflow-hidden rounded-[1.35rem] border border-white/20 bg-[#0b1f3a] shadow-[0_28px_90px_rgba(4,18,40,.45)]">
+
           {/* Header */}
           <div className="relative overflow-hidden border-b border-white/10 px-4 py-3.5">
             <div
@@ -158,11 +151,11 @@ export function SupportChatWidget() {
 
             <div className="relative flex items-center justify-between gap-3">
               <div className="flex items-center gap-3">
+
+                {/* Journey Genie Logo */}
                 <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 ring-1 ring-white/15">
                   <Image
-                    src={assetPath(
-                      LOGO_NAV_PATH
-                    )}
+                    src="/assets/brand/journey-genie-logo.jpeg"
                     alt="Journey Genie"
                     width={36}
                     height={36}
@@ -174,7 +167,6 @@ export function SupportChatWidget() {
                 <div>
                   <p className="flex items-center gap-1.5 text-sm font-semibold text-white">
                     Journey Genie Assistant
-
                     <Sparkles className="h-3.5 w-3.5 text-gold" />
                   </p>
 
@@ -186,9 +178,7 @@ export function SupportChatWidget() {
 
               <button
                 type="button"
-                onClick={() =>
-                  setOpen(false)
-                }
+                onClick={() => setOpen(false)}
                 className="rounded-lg p-1.5 text-white/65 hover:bg-white/10 hover:text-white"
                 aria-label="Close chat"
               >
@@ -237,9 +227,7 @@ export function SupportChatWidget() {
                     <button
                       key={q}
                       type="button"
-                      onClick={() =>
-                        void sendMessage(q)
-                      }
+                      onClick={() => void sendMessage(q)}
                       className="rounded-full border border-navy/10 bg-white px-3 py-1.5 text-left text-[12px] font-medium text-navy/80 shadow-sm transition hover:border-gold/50 hover:bg-gold/10 hover:text-navy"
                     >
                       {q}
@@ -276,9 +264,7 @@ export function SupportChatWidget() {
             >
               <input
                 value={input}
-                onChange={(e) =>
-                  setInput(e.target.value)
-                }
+                onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask about flights, hotels or holidays…"
                 className="h-11 flex-1 rounded-xl border border-navy/10 bg-[#faf8f4] px-3.5 text-sm text-navy outline-none ring-gold/40 placeholder:text-navy/35 focus:ring-2"
                 disabled={loading}
@@ -286,10 +272,7 @@ export function SupportChatWidget() {
 
               <button
                 type="submit"
-                disabled={
-                  loading ||
-                  !input.trim()
-                }
+                disabled={loading || !input.trim()}
                 className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gold text-navy transition hover:bg-gold-light disabled:opacity-50"
                 aria-label="Send"
               >
@@ -313,9 +296,7 @@ export function SupportChatWidget() {
       {/* Floating Chat Button */}
       <button
         type="button"
-        onClick={() =>
-          setOpen((v) => !v)
-        }
+        onClick={() => setOpen((v) => !v)}
         className="group flex h-14 items-center gap-2 rounded-full bg-navy px-2 pr-4 text-white shadow-[0_14px_44px_rgba(7,29,56,.4)] ring-1 ring-gold/30 transition hover:-translate-y-0.5 hover:bg-navy-light"
         aria-label={
           open
@@ -332,9 +313,7 @@ export function SupportChatWidget() {
         </span>
 
         <span className="text-sm font-semibold tracking-wide">
-          {open
-            ? "Close"
-            : "Journey Genie"}
+          {open ? "Close" : "Journey Genie"}
         </span>
       </button>
     </div>
