@@ -18,10 +18,11 @@ import {
   WhatsAppIcon,
 } from "@/components/shared/SocialIcons";
 import { GsapReveal } from "@/components/motion/GsapReveal";
-import { GsapStagger, GsapStaggerItem } from "@/components/motion/GsapStagger";
-import { assetPath } from "@/lib/base-path";
 import {
-  LOGO_PATH,
+  GsapStagger,
+  GsapStaggerItem,
+} from "@/components/motion/GsapStagger";
+import {
   OFFICES,
   SITE,
   SOCIAL,
@@ -45,11 +46,24 @@ const companyLinks = [
 ] as const;
 
 const socialLinks = [
-  { href: SOCIAL.instagram, label: "Instagram", Icon: InstagramIcon },
-  { href: SOCIAL.whatsapp, label: "WhatsApp", Icon: WhatsAppIcon },
+  {
+    href: SOCIAL.instagram,
+    label: "Instagram",
+    Icon: InstagramIcon,
+  },
+  {
+    href: SOCIAL.whatsapp,
+    label: "WhatsApp",
+    Icon: WhatsAppIcon,
+  },
 ] as const;
 
-const trustIcons = [BadgeCheck, ShieldCheck, Clock, Globe] as const;
+const trustIcons = [
+  BadgeCheck,
+  ShieldCheck,
+  Clock,
+  Globe,
+] as const;
 
 export function Footer() {
   const regions =
@@ -120,15 +134,18 @@ export function Footer() {
 
           {/* Brand */}
           <GsapStaggerItem>
-            <Link href="/" className="inline-flex items-center gap-3">
-             <Image
-  src="/assets/brand/journey-genie-logo.jpeg"
-  alt="Journey Genie"
-  width={100}
-  height={100}
-  className="h-16 w-16 object-contain"
-  unoptimized
-/>
+            <Link
+              href="/"
+              className="inline-flex items-center gap-3"
+            >
+              <Image
+                src="/assets/brand/journey-genie-logo.jpeg"
+                alt="Journey Genie"
+                width={100}
+                height={100}
+                className="h-16 w-16 object-contain"
+                unoptimized
+              />
 
               <div>
                 <p className="font-brand text-xl font-bold leading-tight">
@@ -153,7 +170,8 @@ export function Footer() {
 
             <div className="mt-5 flex flex-wrap gap-2">
               {TRUST_BADGES.map((badge, index) => {
-                const Icon = trustIcons[index] ?? ShieldCheck;
+                const Icon =
+                  trustIcons[index] ?? ShieldCheck;
 
                 return (
                   <span
@@ -168,33 +186,41 @@ export function Footer() {
             </div>
 
             <div className="mt-5 flex gap-2.5">
-              {socialLinks.map(({ href, label, Icon }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  className={
-                    label === "WhatsApp"
-                      ? "flex h-10 w-10 items-center justify-center rounded-xl border border-[#25D366]/35 bg-[#25D366]/15 text-[#25D366] transition hover:-translate-y-0.5 hover:bg-[#25D366]/25"
-                      : "flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/60 transition hover:-translate-y-0.5 hover:border-gold/50 hover:bg-gold/10 hover:text-gold"
-                  }
-                >
-                  <Icon className="h-4 w-4" />
-                </a>
-              ))}
+              {socialLinks.map(
+                ({ href, label, Icon }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className={
+                      label === "WhatsApp"
+                        ? "flex h-10 w-10 items-center justify-center rounded-xl border border-[#25D366]/35 bg-[#25D366]/15 text-[#25D366] transition hover:-translate-y-0.5 hover:bg-[#25D366]/25"
+                        : "flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/60 transition hover:-translate-y-0.5 hover:border-gold/50 hover:bg-gold/10 hover:text-gold"
+                    }
+                  >
+                    <Icon className="h-4 w-4" />
+                  </a>
+                )
+              )}
             </div>
           </GsapStaggerItem>
 
           {/* Explore */}
           <GsapStaggerItem>
-            <FooterLinks title="Explore" links={exploreLinks} />
+            <FooterLinks
+              title="Explore"
+              links={exploreLinks}
+            />
           </GsapStaggerItem>
 
           {/* Company */}
           <GsapStaggerItem>
-            <FooterLinks title="Company" links={companyLinks} />
+            <FooterLinks
+              title="Company"
+              links={companyLinks}
+            />
           </GsapStaggerItem>
 
           {/* Contact */}
@@ -211,6 +237,7 @@ export function Footer() {
                 <IconBubble>
                   <Phone className="h-4 w-4" />
                 </IconBubble>
+
                 {OFFICES.headOffice.phone}
               </a>
 
@@ -223,6 +250,7 @@ export function Footer() {
                 <IconBubble>
                   <WhatsAppIcon className="h-4 w-4" />
                 </IconBubble>
+
                 WhatsApp {SITE.whatsappNumber}
               </a>
 
@@ -233,7 +261,10 @@ export function Footer() {
                 <IconBubble>
                   <Mail className="h-4 w-4" />
                 </IconBubble>
-                <span className="break-all">{SITE.email}</span>
+
+                <span className="break-all">
+                  {SITE.email}
+                </span>
               </a>
 
               <p className="flex items-start gap-3 text-white/45">
@@ -282,28 +313,6 @@ export function Footer() {
               <ShieldCheck className="h-3.5 w-3.5 text-gold" />
               Your Magical Travel Partner
             </span>
-
-            <span
-              className="hidden h-3 w-px bg-white/15 sm:inline-block"
-              aria-hidden
-            />
-
-            <a
-              href="https://www.induswebagency.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-gold-light shadow-[0_0_20px_rgba(228,173,61,0.12)] transition hover:-translate-y-0.5 hover:border-gold/70 hover:bg-gold/20 hover:text-gold hover:shadow-[0_0_24px_rgba(228,173,61,0.22)]"
-            >
-              <span className="font-medium normal-case tracking-normal text-white/70 group-hover:text-white/90">
-                Made by
-              </span>
-
-              <span className="font-bold tracking-[0.12em]">
-                INDUS WEB AGENCY
-              </span>
-
-              <ArrowUpRight className="h-3.5 w-3.5 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-            </a>
           </div>
         </div>
       </div>
@@ -311,7 +320,11 @@ export function Footer() {
   );
 }
 
-function IconBubble({ children }: { children: ReactNode }) {
+function IconBubble({
+  children,
+}: {
+  children: ReactNode;
+}) {
   return (
     <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/5 text-gold">
       {children}
@@ -324,7 +337,9 @@ function FooterLinks({
   links,
 }: {
   title: string;
-  links: ReadonlyArray<readonly [string, string]>;
+  links: ReadonlyArray<
+    readonly [string, string]
+  >;
 }) {
   return (
     <div>
