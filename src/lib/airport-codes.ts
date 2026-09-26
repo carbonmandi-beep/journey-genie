@@ -1,8 +1,9 @@
 /**
- * Airport and city code utilities for Journey Genie.
+ * Journey Genie
+ * Airport and city code utilities.
  *
- * This file keeps compatibility with the existing ticket/inventory system
- * while providing a larger India + worldwide airport/city directory.
+ * This file maintains compatibility with the existing ticket/inventory
+ * system while supporting India and worldwide destinations.
  */
 
 const AIRPORT_CITIES: Record<string, string> = {
@@ -53,12 +54,9 @@ const AIRPORT_CITIES: Record<string, string> = {
   IXA: "Agartala",
   IXW: "Jamshedpur",
   VTZ: "Visakhapatnam",
-  VSKP: "Visakhapatnam",
   TIR: "Tirupati",
-  MAA: "Chennai",
   TRZ: "Tiruchirappalli",
   VGA: "Vijayawada",
-  CJB: "Coimbatore",
   HBX: "Hubballi",
   IXG: "Belagavi",
   BDQ: "Vadodara",
@@ -68,34 +66,25 @@ const AIRPORT_CITIES: Record<string, string> = {
   DIB: "Dibrugarh",
   DMU: "Dimapur",
   IXI: "Lilabari",
-  IXT: "Pasighat",
   RDP: "Durgapur",
   IXU: "Aurangabad",
-  SOW: "Sawai Madhopur",
   AGR: "Agra",
   GWL: "Gwalior",
   KNU: "Kanpur",
   IXS: "Silchar",
-  DEP: "Deparizo",
   TEZ: "Tezpur",
   PYG: "Pakyong",
   IXK: "Keshod",
   DIU: "Diu",
   PBD: "Porbandar",
   TCR: "Tuticorin",
-  VDY: "Vijayanagar",
-  BUP: "Bhatinda",
-  AIP: "Adampur",
-  HJR: "Khajuraho",
-  IXD: "Prayagraj",
   RJA: "Rajahmundry",
   KJB: "Kurnool",
-  TJV: "Thanjavur",
   SXV: "Salem",
   MYQ: "Mysuru",
 
   // =========================================================
-  // PAKISTAN - EXISTING INVENTORY SUPPORT
+  // PAKISTAN
   // =========================================================
 
   ISB: "Islamabad",
@@ -105,8 +94,6 @@ const AIRPORT_CITIES: Record<string, string> = {
   SKT: "Sialkot",
   MUX: "Multan",
   LYP: "Faisalabad",
-
-  // Additional Pakistan
   UET: "Quetta",
   GIL: "Gilgit",
   SKZ: "Sukkur",
@@ -142,7 +129,7 @@ const AIRPORT_CITIES: Record<string, string> = {
   RAE: "Arar",
 
   // =========================================================
-  // UNITED ARAB EMIRATES
+  // UAE
   // =========================================================
 
   DXB: "Dubai",
@@ -163,18 +150,16 @@ const AIRPORT_CITIES: Record<string, string> = {
   KWI: "Kuwait City",
 
   // =========================================================
-  // OTHER GULF / MIDDLE EAST
+  // MIDDLE EAST
   // =========================================================
 
-  BSR: "Basra",
   BGW: "Baghdad",
   EBL: "Erbil",
   AMM: "Amman",
   BEY: "Beirut",
-  DAM: "Damascus",
   TLV: "Tel Aviv",
   CAI: "Cairo",
-  SHM: "Sharm El Sheikh",
+  SSH: "Sharm El Sheikh",
   HRG: "Hurghada",
   IST: "Istanbul",
   SAW: "Istanbul",
@@ -192,9 +177,8 @@ const AIRPORT_CITIES: Record<string, string> = {
   DAC: "Dhaka",
   CGP: "Chittagong",
   CMB: "Colombo",
-  MLE: "Malé",
+  MLE: "Male",
   HRI: "Hambantota",
-  KHI: "Karachi",
   KBL: "Kabul",
 
   // =========================================================
@@ -245,7 +229,7 @@ const AIRPORT_CITIES: Record<string, string> = {
   MFM: "Macau",
 
   // =========================================================
-  // EUROPE - UNITED KINGDOM / IRELAND
+  // UNITED KINGDOM / IRELAND
   // =========================================================
 
   LHR: "London",
@@ -260,7 +244,7 @@ const AIRPORT_CITIES: Record<string, string> = {
   DUB: "Dublin",
 
   // =========================================================
-  // EUROPE - FRANCE / GERMANY
+  // EUROPE
   // =========================================================
 
   CDG: "Paris",
@@ -268,35 +252,19 @@ const AIRPORT_CITIES: Record<string, string> = {
   FRA: "Frankfurt",
   MUC: "Munich",
   BER: "Berlin",
-  DUS: "Düsseldorf",
+  DUS: "Dusseldorf",
   HAM: "Hamburg",
-
-  // =========================================================
-  // EUROPE - NETHERLANDS / SWITZERLAND / AUSTRIA
-  // =========================================================
-
   AMS: "Amsterdam",
   ZRH: "Zurich",
   GVA: "Geneva",
   VIE: "Vienna",
-
-  // =========================================================
-  // EUROPE - ITALY / SPAIN / PORTUGAL
-  // =========================================================
-
   FCO: "Rome",
   MXP: "Milan",
   VCE: "Venice",
   BCN: "Barcelona",
   MAD: "Madrid",
   LIS: "Lisbon",
-
-  // =========================================================
-  // EUROPE - OTHER
-  // =========================================================
-
   ATH: "Athens",
-  IST: "Istanbul",
   CPH: "Copenhagen",
   ARN: "Stockholm",
   OSL: "Oslo",
@@ -313,7 +281,7 @@ const AIRPORT_CITIES: Record<string, string> = {
   LED: "Saint Petersburg",
 
   // =========================================================
-  // NORTH AMERICA - USA
+  // USA
   // =========================================================
 
   JFK: "New York",
@@ -410,25 +378,25 @@ const AIRPORT_CITIES: Record<string, string> = {
 };
 
 /**
- * City name -> IATA code lookup.
+ * City name -> IATA code.
+ *
+ * If multiple airports have the same city name, the first airport
+ * in the directory becomes the default city code.
  */
-const CITY_TO_CODE: Record<string, string> = Object.entries(AIRPORT_CITIES).reduce(
-  (result, [code, city]) => {
-    const normalizedCity = city.trim().toLowerCase();
+const CITY_TO_CODE: Record<string, string> = {};
 
-    if (!result[normalizedCity]) {
-      result[normalizedCity] = code;
-    }
+for (const [code, city] of Object.entries(AIRPORT_CITIES)) {
+  const normalizedCity = city.trim().toLowerCase();
 
-    return result;
-  },
-  {} as Record<string, string>,
-);
+  if (!CITY_TO_CODE[normalizedCity]) {
+    CITY_TO_CODE[normalizedCity] = code;
+  }
+}
 
 /**
- * Existing Pakistan inventory codes.
+ * Pakistan airport codes.
  */
-export const PK_AIRPORT_CODES = new Set([
+export const PK_AIRPORT_CODES = new Set<string>([
   "ISB",
   "LHE",
   "KHI",
@@ -450,9 +418,9 @@ export const PK_AIRPORT_CODES = new Set([
 ]);
 
 /**
- * Gulf-region airport codes.
+ * Gulf airport codes.
  */
-export const GULF_AIRPORT_CODES = new Set([
+export const GULF_AIRPORT_CODES = new Set<string>([
   "DXB",
   "AUH",
   "SHJ",
@@ -481,28 +449,34 @@ export const GULF_AIRPORT_CODES = new Set([
 ]);
 
 /**
- * Check whether a value looks like an IATA airport code.
+ * Determine whether a value is a valid-looking IATA code.
  */
 export function isIataCode(value: unknown): boolean {
-  if (typeof value !== "string") return false;
+  if (typeof value !== "string") {
+    return false;
+  }
 
   return /^[A-Za-z]{3}$/.test(value.trim());
 }
 
 /**
- * Resolve an airport/city value into an IATA code.
+ * Resolve a city or airport code.
  *
  * Examples:
  * resolveAirport("Delhi") -> "DEL"
- * resolveAirport("DEL")   -> "DEL"
+ * resolveAirport("DEL") -> "DEL"
  * resolveAirport("Dubai") -> "DXB"
  */
 export function resolveAirport(value: unknown): string | null {
-  if (typeof value !== "string") return null;
+  if (typeof value !== "string") {
+    return null;
+  }
 
   const normalized = value.trim();
 
-  if (!normalized) return null;
+  if (!normalized) {
+    return null;
+  }
 
   const upper = normalized.toUpperCase();
 
@@ -510,13 +484,70 @@ export function resolveAirport(value: unknown): string | null {
     return upper;
   }
 
-  const cityCode = CITY_TO_CODE[normalized.toLowerCase()];
-
-  return cityCode || null;
+  return CITY_TO_CODE[normalized.toLowerCase()] || null;
 }
 
 /**
- * Check whether an airport/city matches a search filter.
+ * Determine whether a route is an outbound group ticket.
+ *
+ * IMPORTANT:
+ * The existing project calls this function with TWO arguments:
+ *
+ * isOutboundGroupTicket(from, to)
+ *
+ * Therefore both arguments are supported here.
+ *
+ * The second argument is optional so older one-argument calls,
+ * if any, remain compatible.
+ */
+export function isOutboundGroupTicket(
+  from: unknown,
+  to?: unknown,
+): boolean {
+  const fromCode = resolveAirport(from);
+  const toCode = resolveAirport(to);
+
+  if (!fromCode || !toCode) {
+    return false;
+  }
+
+  /*
+   * Existing inventory logic is primarily concerned with
+   * Pakistan -> Gulf/Saudi outbound routes.
+   */
+  return (
+    PK_AIRPORT_CODES.has(fromCode) &&
+    GULF_AIRPORT_CODES.has(toCode)
+  );
+}
+
+/**
+ * Detect return-leg external IDs.
+ */
+export function isReturnLegExternalId(
+  externalId: unknown,
+): boolean {
+  if (typeof externalId !== "string") {
+    return false;
+  }
+
+  const value = externalId.trim().toLowerCase();
+
+  if (!value) {
+    return false;
+  }
+
+  return (
+    value.includes("return") ||
+    value.includes("return-leg") ||
+    value.includes("return_leg") ||
+    value.includes("inbound") ||
+    value.includes("in-bound")
+  );
+}
+
+/**
+ * Determine whether a city/airport matches a filter.
  */
 export function cityMatchesFilter(
   airportCode: unknown,
@@ -531,8 +562,8 @@ export function cityMatchesFilter(
   }
 
   const search = filter.trim().toLowerCase();
-
   const code = airportCode.trim().toUpperCase();
+
   const city = AIRPORT_CITIES[code]?.toLowerCase() || "";
 
   return (
@@ -542,83 +573,43 @@ export function cityMatchesFilter(
 }
 
 /**
- * Format a route using city names where possible.
+ * Format a route for display.
  *
- * Examples:
- * DEL -> DXB
- * becomes
- * Delhi → Dubai
+ * Example:
+ * DEL + DXB
+ * -> Delhi → Dubai
  */
 export function formatRouteLabel(
   from: unknown,
   to: unknown,
 ): string {
-  const fromValue = typeof from === "string" ? from.trim() : "";
-  const toValue = typeof to === "string" ? to.trim() : "";
+  const fromValue =
+    typeof from === "string" ? from.trim() : "";
+
+  const toValue =
+    typeof to === "string" ? to.trim() : "";
 
   const fromCode = resolveAirport(fromValue);
   const toCode = resolveAirport(toValue);
 
   const fromLabel =
-    (fromCode && AIRPORT_CITIES[fromCode]) || fromValue || "Origin";
+    (fromCode && AIRPORT_CITIES[fromCode]) ||
+    fromValue ||
+    "Origin";
 
   const toLabel =
-    (toCode && AIRPORT_CITIES[toCode]) || toValue || "Destination";
+    (toCode && AIRPORT_CITIES[toCode]) ||
+    toValue ||
+    "Destination";
 
   return `${fromLabel} → ${toLabel}`;
 }
 
 /**
- * Detect outbound/group-ticket identifiers used by the existing
- * inventory system.
+ * Popular search cities.
  *
- * This intentionally accepts unknown input so it remains compatible
- * with existing ticket data structures.
- */
-export function isOutboundGroupTicket(
-  externalId: unknown,
-): boolean {
-  if (typeof externalId !== "string") return false;
-
-  const value = externalId.trim().toLowerCase();
-
-  if (!value) return false;
-
-  return (
-    value.includes("outbound") ||
-    value.includes("out-bound") ||
-    value.includes("departure") ||
-    value.includes("group")
-  );
-}
-
-/**
- * Detect return-leg identifiers used by the existing inventory system.
- */
-export function isReturnLegExternalId(
-  externalId: unknown,
-): boolean {
-  if (typeof externalId !== "string") return false;
-
-  const value = externalId.trim().toLowerCase();
-
-  if (!value) return false;
-
-  return (
-    value.includes("return") ||
-    value.includes("return-leg") ||
-    value.includes("return_leg") ||
-    value.includes("inbound") ||
-    value.includes("in-bound")
-  );
-}
-
-/**
- * Search suggestions.
- *
- * The UI can still accept ANY city worldwide because the new
- * TicketsSearchBar uses free-text input. These are simply popular
- * suggestions.
+ * The actual Journey Genie search bar can still accept
+ * any city worldwide because it uses free-text input.
  */
 export const SEARCH_CITIES = [
   // India
@@ -652,13 +643,11 @@ export const SEARCH_CITIES = [
   "Mangaluru",
   "Dehradun",
   "Leh",
-  "Bagdogra",
-  "Port Blair",
+  "Jammu",
+  "Dharamshala",
   "Jodhpur",
   "Udaipur",
   "Agra",
-  "Jammu",
-  "Dharamshala",
 
   // Pakistan
   "Islamabad",
@@ -670,7 +659,7 @@ export const SEARCH_CITIES = [
   "Faisalabad",
   "Quetta",
 
-  // Gulf / Middle East
+  // Gulf
   "Dubai",
   "Abu Dhabi",
   "Sharjah",
@@ -682,9 +671,6 @@ export const SEARCH_CITIES = [
   "Muscat",
   "Kuwait City",
   "Bahrain",
-  "Istanbul",
-  "Amman",
-  "Cairo",
 
   // Asia
   "Singapore",
@@ -704,8 +690,9 @@ export const SEARCH_CITIES = [
   "Ho Chi Minh City",
   "Colombo",
   "Kathmandu",
-  "Malé",
+  "Male",
   "Dhaka",
+  "Istanbul",
 
   // Europe
   "London",
@@ -777,6 +764,6 @@ export const SEARCH_CITIES = [
 ] as const;
 
 /**
- * Export the complete airport directory for any code that may need it.
+ * Export the complete airport directory.
  */
 export { AIRPORT_CITIES, CITY_TO_CODE };
