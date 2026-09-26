@@ -41,6 +41,83 @@ function buildWhatsAppUrl(message: string) {
   )}`;
 }
 
+/*
+ * India-origin airport codes.
+ *
+ * We only show supplier inventory that actually
+ * departs from India on the public Journey Genie
+ * flight page.
+ *
+ * International destinations remain allowed.
+ */
+const INDIA_AIRPORT_CODES = new Set([
+  "DEL",
+  "BOM",
+  "BLR",
+  "MAA",
+  "HYD",
+  "CCU",
+  "AMD",
+  "PNQ",
+  "GOI",
+  "GOX",
+  "COK",
+  "TRV",
+  "CJB",
+  "JAI",
+  "LKO",
+  "ATQ",
+  "IXC",
+  "IXB",
+  "IXM",
+  "IXR",
+  "IXZ",
+  "IXJ",
+  "IXA",
+  "GAU",
+  "BBI",
+  "NAG",
+  "IDR",
+  "BHO",
+  "PAT",
+  "RPR",
+  "VNS",
+  "SXR",
+  "SVO",
+  "UDR",
+  "JDH",
+  "JSA",
+  "DED",
+  "DHM",
+  "KUU",
+  "SLV",
+  "IXL",
+  "STV",
+  "BDQ",
+  "RAJ",
+  "TRZ",
+  "VTZ",
+  "VGA",
+  "TIR",
+  "IXE",
+  "IXB",
+  "IXS",
+  "IXI",
+  "IMF",
+  "DMU",
+  "AJL",
+  "DIB",
+  "JRH",
+  "SHL",
+  "IXT",
+  "IXN",
+  "CNN",
+  "CCJ",
+  "IXM",
+  "TCR",
+  "IXZ",
+]);
+
 export interface TicketsPageClientProps {
   tickets: Ticket[];
 }
@@ -58,6 +135,25 @@ export function TicketsPageClient({
 
   const [visibleCount, setVisibleCount] =
     useState(20);
+
+  /*
+   * IMPORTANT:
+   * Only show flights whose actual departure
+   * airport is in India.
+   *
+   * This prevents Pakistan-origin supplier
+   * inventory such as ISB/LHE from appearing
+   * on the India-facing Journey Genie website.
+   */
+  const indiaTickets = useMemo(() => {
+    return tickets.filter((ticket) =>
+      INDIA_AIRPORT_CODES.has(
+        String(ticket.from)
+          .trim()
+          .toUpperCase()
+      )
+    );
+  }, [tickets]);
 
   useEffect(() => {
     const initial: TicketFilters = {};
@@ -99,17 +195,19 @@ export function TicketsPageClient({
 
   const options = useMemo(
     () =>
-      getUniqueFilterOptions(tickets),
-    [tickets]
+      getUniqueFilterOptions(
+        indiaTickets
+      ),
+    [indiaTickets]
   );
 
   const filtered = useMemo(
     () =>
       filterTickets(
-        tickets,
+        indiaTickets,
         filters
       ),
-    [tickets, filters]
+    [indiaTickets, filters]
   );
 
   const visible = filtered.slice(
@@ -128,9 +226,9 @@ export function TicketsPageClient({
     setVisibleCount(20);
   }
 
-  const whatsappUrl =
+  const generalWhatsAppUrl =
     buildWhatsAppUrl(
-      "Hi Journey Genie, I want to check a flight fare. Please help me find the best available option."
+      "Hi Journey Genie, I want to check a flight from India. Please help me find the available domestic or international options."
     );
 
   return (
@@ -144,17 +242,15 @@ export function TicketsPageClient({
             </p>
 
             <h2 className="mt-2 font-heading text-2xl font-bold text-navy sm:text-3xl">
-              Find Your Flight From India
+              Flights From India to the World
             </h2>
 
             <p className="mt-3 text-sm leading-6 text-muted-foreground sm:text-base">
-              Compare available domestic and
-              international flight options with
-              Journey Genie. Flying from Delhi,
-              Mumbai, Amritsar, Bengaluru or
-              another Indian city? Tell us where
-              you want to go and we will help you
-              check the available options.
+              Search domestic and international
+              flights departing from India.
+              From Delhi, Mumbai and Bengaluru
+              to Dubai, Bali, Singapore, Bangkok
+              and destinations worldwide.
             </p>
 
             <div className="mt-4 flex flex-wrap gap-2 text-xs font-medium text-muted-foreground">
@@ -167,17 +263,17 @@ export function TicketsPageClient({
               </span>
 
               <span className="rounded-full bg-muted px-3 py-1.5">
-                ✈️ Flights Worldwide
+                ✈️ Worldwide Destinations
               </span>
 
               <span className="rounded-full bg-muted px-3 py-1.5">
-                💬 Personal Assistance
+                💬 WhatsApp Support
               </span>
             </div>
           </div>
 
           <a
-            href={whatsappUrl}
+            href={generalWhatsAppUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
@@ -188,16 +284,16 @@ export function TicketsPageClient({
         </div>
       </section>
 
-      {/* Popular India routes */}
+      {/* Popular routes */}
       <section>
         <div className="mb-3">
           <h3 className="font-heading text-lg font-bold text-navy">
-            Popular From India
+            Popular International Routes From India
           </h3>
 
           <p className="text-sm text-muted-foreground">
-            Looking for one of these routes?
-            Send us your requirement on WhatsApp.
+            Send us your route and travel date.
+            We will check the available options.
           </p>
         </div>
 
@@ -208,14 +304,14 @@ export function TicketsPageClient({
             "Delhi → Singapore",
             "Mumbai → Dubai",
             "Delhi → Bangkok",
-            "Delhi → Goa",
-            "Delhi → Kashmir",
+            "Delhi → Maldives",
+            "Delhi → London",
             "Amritsar → Dubai",
           ].map((route) => (
             <a
               key={route}
               href={buildWhatsAppUrl(
-                `Hi Journey Genie, I want to check the fare for ${route}. Please share the available options.`
+                `Hi Journey Genie, I want to check the flight fare for ${route}. Please share the available options.`
               )}
               target="_blank"
               rel="noopener noreferrer"
@@ -251,15 +347,14 @@ export function TicketsPageClient({
                 <strong className="text-navy">
                   {filtered.length}
                 </strong>{" "}
-                available flight options
+                India-origin flight options
               </p>
 
               {filtered.length !==
-                tickets.length && (
+                indiaTickets.length && (
                 <p className="mt-1 text-xs text-muted-foreground/80">
-                  Filtered from{" "}
-                  {tickets.length} available
-                  options
+                  Filters applied to available
+                  India-origin flights
                 </p>
               )}
             </div>
@@ -305,9 +400,7 @@ export function TicketsPageClient({
                       updateFilters(next);
                     }}
                     options={options}
-                    airlineNames={
-                      airlineNames
-                    }
+                    airlineNames={airlineNames}
                   />
 
                   <Button
@@ -325,42 +418,51 @@ export function TicketsPageClient({
             </Sheet>
           </div>
 
-          {/* No supplier inventory */}
-          {tickets.length === 0 ? (
-            <div className="rounded-xl border border-dashed border-border p-10 text-center sm:p-12">
-              <p className="font-medium text-navy">
-                Looking for a flight?
-              </p>
+          {/* No India inventory */}
+          {indiaTickets.length === 0 ? (
+            <div className="rounded-2xl border border-dashed border-border p-10 text-center sm:p-14">
+              <div className="mx-auto max-w-2xl">
+                <p className="text-lg font-bold text-navy">
+                  Looking for a flight from India?
+                </p>
 
-              <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                Send your departure city,
-                destination and travel date
-                to Journey Genie on WhatsApp.
-                Our travel team will check the
-                available options for you.
-              </p>
+                <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                  Our India flight inventory is
+                  currently being updated. Send
+                  your departure city, destination
+                  and travel date to Journey Genie
+                  on WhatsApp and our travel team
+                  will check the available options
+                  for you.
+                </p>
 
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-5 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground"
-              >
-                <MessageCircle className="h-4 w-4" />
-                Check Fare on WhatsApp
-              </a>
+                <a
+                  href={generalWhatsAppUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-6 inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  Check Fare on WhatsApp
+                </a>
+
+                <p className="mt-4 text-xs text-muted-foreground">
+                  Domestic & International
+                  Flights · India to Worldwide
+                  Destinations
+                </p>
+              </div>
             </div>
           ) : filtered.length === 0 ? (
             <div className="rounded-xl border border-dashed border-border p-10 text-center sm:p-12">
               <p className="font-medium text-navy">
-                We couldn't find a matching
-                flight option.
+                No matching India flight found.
               </p>
 
               <p className="mt-2 text-sm text-muted-foreground">
                 Try changing your filters or
-                send your requirement directly
-                to our travel team.
+                ask our travel team to check
+                another route.
               </p>
 
               <div className="mt-4 flex flex-col justify-center gap-3 sm:flex-row">
@@ -378,7 +480,7 @@ export function TicketsPageClient({
                 )}
 
                 <a
-                  href={whatsappUrl}
+                  href={generalWhatsAppUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
@@ -422,18 +524,16 @@ export function TicketsPageClient({
                 </div>
               )}
 
-              {/* WhatsApp conversion CTA */}
+              {/* WhatsApp CTA */}
               <section className="rounded-2xl border bg-muted/40 p-6 text-center sm:p-8">
                 <h3 className="font-heading text-xl font-bold text-navy">
-                  Found a better fare
-                  somewhere else?
+                  Found a better fare somewhere else?
                 </h3>
 
                 <p className="mx-auto mt-2 max-w-xl text-sm leading-6 text-muted-foreground">
-                  Send us a screenshot on
-                  WhatsApp. Our travel team
-                  will check the available
-                  options for you.
+                  Send us a screenshot on WhatsApp.
+                  Our travel team will check the
+                  available options for you.
                 </p>
 
                 <a
