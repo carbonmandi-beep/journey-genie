@@ -47,14 +47,23 @@ const POPULAR_DESTINATIONS = [
   "New York (JFK)",
   "Goa (GOI)",
   "Srinagar (SXR)",
-  "Kerala (COK)",
+  "Kochi (COK)",
   "Other Destination",
 ] as const;
 
 const CABIN_CLASSES = [
-  { label: "Economy", value: "Economy" },
-  { label: "Premium Economy", value: "Premium Economy" },
-  { label: "Business", value: "Business" },
+  {
+    label: "Economy",
+    value: "Economy",
+  },
+  {
+    label: "Premium Economy",
+    value: "Premium Economy",
+  },
+  {
+    label: "Business",
+    value: "Business",
+  },
 ] as const;
 
 interface TicketsSearchBarProps {
@@ -77,7 +86,7 @@ export function TicketsSearchBar({
     setTo(from);
   }
 
-  function handleWhatsApp(e: React.FormEvent) {
+  function handleWhatsApp(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const message = `Hi Journey Genie,
@@ -106,7 +115,7 @@ Please check the available flight fares for me.`;
         onSubmit={handleWhatsApp}
         className="overflow-hidden rounded-3xl border border-gold/20 bg-white shadow-2xl shadow-navy/10"
       >
-        {/* India-focused heading */}
+        {/* Header */}
         <div className="border-b border-border/60 bg-gradient-to-r from-navy to-navy-light px-5 py-5 text-white md:px-7">
           <div className="flex items-center gap-3">
             <span className="text-2xl">🇮🇳</span>
@@ -129,16 +138,21 @@ Please check the available flight fares for me.`;
         </div>
 
         <div className="p-5 md:p-7">
-
           {/* From / To */}
           <div className="grid grid-cols-[1fr_auto_1fr] items-end gap-2 md:gap-4">
+            {/* From */}
             <div className="space-y-2">
               <Label className="flex items-center gap-1.5 text-navy">
                 <MapPin className="h-3.5 w-3.5 text-gold" />
                 Flying From
               </Label>
 
-              <Select value={from} onValueChange={setFrom}>
+              <Select
+                value={from}
+                onValueChange={(value) => {
+                  if (value) setFrom(value);
+                }}
+              >
                 <SelectTrigger className="h-12 w-full border-border/60">
                   <SelectValue placeholder="Select departure city" />
                 </SelectTrigger>
@@ -153,6 +167,7 @@ Please check the available flight fares for me.`;
               </Select>
             </div>
 
+            {/* Swap */}
             <button
               type="button"
               onClick={swapCities}
@@ -162,13 +177,19 @@ Please check the available flight fares for me.`;
               <ArrowRightLeft className="h-4 w-4" />
             </button>
 
+            {/* To */}
             <div className="space-y-2">
               <Label className="flex items-center gap-1.5 text-navy">
                 <MapPin className="h-3.5 w-3.5 text-gold" />
                 Flying To
               </Label>
 
-              <Select value={to} onValueChange={setTo}>
+              <Select
+                value={to}
+                onValueChange={(value) => {
+                  if (value) setTo(value);
+                }}
+              >
                 <SelectTrigger className="h-12 w-full border-border/60">
                   <SelectValue placeholder="Select destination" />
                 </SelectTrigger>
@@ -186,7 +207,6 @@ Please check the available flight fares for me.`;
 
           {/* Travel details */}
           <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-
             {/* Departure */}
             <div className="space-y-2">
               <Label className="flex items-center gap-1.5 text-navy">
@@ -224,7 +244,12 @@ Please check the available flight fares for me.`;
                 Travellers
               </Label>
 
-              <Select value={travellers} onValueChange={setTravellers}>
+              <Select
+                value={travellers}
+                onValueChange={(value) => {
+                  if (value) setTravellers(value);
+                }}
+              >
                 <SelectTrigger className="h-12 w-full border-border/60">
                   <SelectValue />
                 </SelectTrigger>
@@ -240,13 +265,16 @@ Please check the available flight fares for me.`;
               </Select>
             </div>
 
-            {/* Class */}
+            {/* Cabin Class */}
             <div className="space-y-2">
-              <Label className="text-navy">
-                Cabin Class
-              </Label>
+              <Label className="text-navy">Cabin Class</Label>
 
-              <Select value={cabinClass} onValueChange={setCabinClass}>
+              <Select
+                value={cabinClass}
+                onValueChange={(value) => {
+                  if (value) setCabinClass(value);
+                }}
+              >
                 <SelectTrigger className="h-12 w-full border-border/60">
                   <SelectValue />
                 </SelectTrigger>
@@ -265,7 +293,7 @@ Please check the available flight fares for me.`;
             </div>
           </div>
 
-          {/* CTA */}
+          {/* WhatsApp CTA */}
           <button
             type="submit"
             className="mt-6 flex h-13 w-full items-center justify-center gap-2 rounded-xl bg-[#25D366] px-6 text-base font-bold text-white shadow-lg shadow-[#25D366]/20 transition hover:-translate-y-0.5 hover:brightness-105"
@@ -274,7 +302,7 @@ Please check the available flight fares for me.`;
             CHECK FARE ON WHATSAPP
           </button>
 
-          {/* Trust message */}
+          {/* Fare message */}
           <div className="mt-5 rounded-xl bg-light-bg px-4 py-3 text-center">
             <p className="text-sm font-semibold text-navy">
               Found a cheaper fare somewhere else?
@@ -286,7 +314,7 @@ Please check the available flight fares for me.`;
             </p>
           </div>
 
-          {/* Popular India routes */}
+          {/* Popular routes */}
           <div className="mt-6">
             <p className="text-center text-xs font-bold uppercase tracking-[0.18em] text-gold">
               Popular from India
