@@ -20,7 +20,7 @@ import {
   Send,
 } from "lucide-react";
 
-const ABHINAV_WHATSAPP_NUMBER = "919876260822";
+const WHATSAPP_NUMBER = "919876260822";
 
 const services = [
   "Flight Booking",
@@ -33,9 +33,7 @@ const services = [
 ];
 
 export function ContactForm() {
-  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
+  const [status, setStatus] = useState<"idle" | "success">("idle");
 
   const [form, setForm] = useState({
     name: "",
@@ -45,81 +43,40 @@ export function ContactForm() {
     message: "",
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true);
-    setStatus("idle");
 
     const whatsappMessage = [
-      "Hello Abhinav,",
+      "Hello Journey Genie,",
       "",
-      "I would like to make a travel inquiry through Journey Genie.",
+      "I would like to make a travel inquiry.",
       "",
       `Name: ${form.name}`,
       `Phone / WhatsApp: ${form.phone}`,
-      form.email && `Email: ${form.email}`,
+      `Email: ${form.email || "Not provided"}`,
       `Service Required: ${form.service}`,
-      `Message: ${form.message}`,
-    ]
-      .filter(Boolean)
-      .join("\n");
+      "",
+      "Travel Requirements:",
+      form.message,
+      "",
+      "Sent through Journey Genie Contact Form.",
+    ].join("\n");
 
-    try {
-      const res = await fetch("/api/inquiries/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          type: "contact",
-          name: form.name,
-          email: form.email,
-          phone: form.phone,
-          service: form.service,
-          message: form.message,
-          source_page: "/contact/",
-        }),
-      });
+    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+      whatsappMessage
+    )}`;
 
-      const data = await res.json();
+    /*
+     * Open WhatsApp directly.
+     * No API or email service is required.
+     */
+    window.open(
+      whatsappUrl,
+      "_blank",
+      "noopener,noreferrer"
+    );
 
-      if (!res.ok) {
-        throw new Error(
-          data.error || "Could not submit inquiry"
-        );
-      }
-
-      // Open WhatsApp directly to Abhinav
-      window.open(
-        `https://wa.me/${ABHINAV_WHATSAPP_NUMBER}?text=${encodeURIComponent(
-          whatsappMessage
-        )}`,
-        "_blank"
-      );
-
-      setStatus("success");
-      setMessage(
-        "Your travel request has been submitted and WhatsApp has been opened for Abhinav."
-      );
-
-      setForm({
-        name: "",
-        email: "",
-        phone: "",
-        service: "",
-        message: "",
-      });
-    } catch (error) {
-      setStatus("error");
-
-      setMessage(
-        error instanceof Error
-          ? error.message
-          : "Could not submit inquiry. Please contact us on WhatsApp."
-      );
-    } finally {
-      setLoading(false);
-    }
+    setStatus("success");
   };
 
   if (status === "success") {
@@ -129,17 +86,28 @@ export function ContactForm() {
           <CheckCircle2 className="mx-auto h-12 w-12 text-gold" />
 
           <h3 className="mt-4 font-heading text-xl font-semibold text-navy">
-            Thank You!
+            WhatsApp Ready!
           </h3>
 
           <p className="mt-2 text-muted-foreground">
-            {message}
+            Your travel details have been prepared for Journey Genie on
+            WhatsApp.
           </p>
 
           <Button
             variant="primaryGold"
             className="mt-4"
-            onClick={() => setStatus("idle")}
+            onClick={() => {
+              setForm({
+                name: "",
+                email: "",
+                phone: "",
+                service: "",
+                message: "",
+              });
+
+              setStatus("idle");
+            }}
           >
             Send Another Inquiry
           </Button>
@@ -150,7 +118,10 @@ export function ContactForm() {
 
   return (
     <Card className="overflow-hidden rounded-[2rem] border-0 bg-white shadow-[0_30px_90px_rgba(25,45,65,.14)]">
+
+      {/* HEADER */}
       <div className="relative overflow-hidden bg-gradient-to-br from-[#284d44] via-[#35665a] to-[#8b6a3d] p-7 text-white sm:p-9">
+
         <div className="absolute -right-20 -top-20 h-56 w-56 rounded-full bg-gold/20 blur-3xl" />
 
         <div className="relative flex h-11 w-11 items-center justify-center rounded-xl bg-gold text-navy">
@@ -162,32 +133,45 @@ export function ContactForm() {
         </h2>
 
         <p className="relative mt-2 max-w-lg text-sm leading-6 text-white/70">
-          Share your travel requirements and a specialist will respond
-          with practical options, availability and a clear quotation.
+          Share your travel requirements and connect directly with
+          Journey Genie on WhatsApp.
         </p>
 
         <div className="relative mt-5 flex flex-wrap gap-4 text-xs text-white/75">
+
           <span className="flex items-center gap-1.5">
             <CheckCircle2 className="h-3.5 w-3.5 text-gold" />
-            No obligation
+            Quick response
           </span>
 
           <span className="flex items-center gap-1.5">
             <CheckCircle2 className="h-3.5 w-3.5 text-gold" />
-            Human response
+            Human support
           </span>
 
           <span className="flex items-center gap-1.5">
             <CheckCircle2 className="h-3.5 w-3.5 text-gold" />
-            Transparent pricing
+            Direct WhatsApp
           </span>
+
         </div>
       </div>
 
+
+      {/* FORM */}
       <CardContent className="p-7 sm:p-8">
-        <form onSubmit={handleSubmit} className="space-y-5">
+
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-5"
+        >
+
+          {/* NAME + PHONE */}
+
           <div className="grid gap-4 sm:grid-cols-2">
+
             <div className="space-y-2">
+
               <Label htmlFor="name">
                 Full Name *
               </Label>
@@ -205,15 +189,19 @@ export function ContactForm() {
                   })
                 }
               />
+
             </div>
 
+
             <div className="space-y-2">
+
               <Label htmlFor="phone">
                 Phone / WhatsApp *
               </Label>
 
               <Input
                 id="phone"
+                type="tel"
                 className="h-12 rounded-xl border-navy/10 bg-[#faf8f4]"
                 placeholder="e.g. +91 98765 43210"
                 required
@@ -225,19 +213,25 @@ export function ContactForm() {
                   })
                 }
               />
+
             </div>
+
           </div>
 
+
+          {/* EMAIL */}
+
           <div className="space-y-2">
+
             <Label htmlFor="email">
               Email
             </Label>
 
             <Input
               id="email"
+              type="email"
               className="h-12 rounded-xl border-navy/10 bg-[#faf8f4]"
               placeholder="you@company.com"
-              type="email"
               value={form.email}
               onChange={(e) =>
                 setForm({
@@ -246,29 +240,34 @@ export function ContactForm() {
                 })
               }
             />
+
           </div>
 
+
+          {/* SERVICE */}
+
           <div className="space-y-2">
+
             <Label>
               Service Required *
             </Label>
 
             <Select
               value={form.service}
-              onValueChange={(v) =>
-                v &&
+              onValueChange={(value) =>
                 setForm({
                   ...form,
-                  service: v,
+                  service: value || "",
                 })
               }
-              required
             >
+
               <SelectTrigger className="h-12 w-full rounded-xl border-navy/10 bg-[#faf8f4]">
                 <SelectValue placeholder="Choose the service you need" />
               </SelectTrigger>
 
               <SelectContent>
+
                 {services.map((service) => (
                   <SelectItem
                     key={service}
@@ -277,11 +276,29 @@ export function ContactForm() {
                     {service}
                   </SelectItem>
                 ))}
+
               </SelectContent>
+
             </Select>
+
+            {/* Hidden native validation for service */}
+            <input
+              type="text"
+              value={form.service}
+              required
+              onChange={() => {}}
+              tabIndex={-1}
+              className="pointer-events-none absolute h-0 w-0 opacity-0"
+              aria-hidden="true"
+            />
+
           </div>
 
+
+          {/* MESSAGE */}
+
           <div className="space-y-2">
+
             <Label htmlFor="message">
               Message *
             </Label>
@@ -300,33 +317,37 @@ export function ContactForm() {
               }
               placeholder="Tell us about your travel requirements..."
             />
+
           </div>
 
-          {status === "error" && (
-            <p className="rounded-md border border-red-accent/30 bg-red-accent/10 px-3 py-2 text-sm text-red-accent">
-              {message}
-            </p>
-          )}
+
+          {/* SUBMIT */}
 
           <Button
             type="submit"
             variant="primaryGold"
             size="lg"
             className="h-12 w-full text-base"
-            disabled={loading}
+            disabled={
+              !form.name ||
+              !form.phone ||
+              !form.service ||
+              !form.message
+            }
           >
-            {loading ? (
-              "Sending securely..."
-            ) : (
-              <>
-                <Send className="mr-2 h-4 w-4" />
-                Send my travel request
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </>
-            )}
+
+            <Send className="mr-2 h-4 w-4" />
+
+            Send to WhatsApp
+
+            <ArrowRight className="ml-2 h-4 w-4" />
+
           </Button>
+
         </form>
+
       </CardContent>
+
     </Card>
   );
 }
