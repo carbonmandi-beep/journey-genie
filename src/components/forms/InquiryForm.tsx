@@ -23,8 +23,9 @@ import {
   PlaneTakeoff,
   UsersRound,
 } from "lucide-react";
-import { SITE } from "@/lib/constants";
 import { whatsappLink } from "@/lib/whatsapp";
+
+const ABHINAV_WHATSAPP_NUMBER = "919876260822";
 
 export function InquiryForm() {
   const [submitted, setSubmitted] = useState(false);
@@ -78,22 +79,23 @@ export function InquiryForm() {
           travel_date: form.travelDate || undefined,
           passengers: Number(form.persons) || 1,
           budget: form.budget
-            ? parseFloat(
-                form.budget.replace(/[^\d.]/g, "")
-              )
+            ? parseFloat(form.budget.replace(/[^\d.]/g, ""))
             : undefined,
           message: form.message || text,
           source_page: "/inquiry/",
         }),
       });
     } catch {
-      /* continue to WhatsApp */
+      /* Continue to WhatsApp even if the inquiry API is unavailable */
     }
 
+    const whatsappMessage =
+      `Hello Abhinav, I would like to make a booking inquiry through Journey Genie:\n\n${text}`;
+
     window.open(
-      whatsappLink(
-        `Hello ${SITE.name}, I would like to make a booking inquiry:\n\n${text}`
-      ),
+      `https://wa.me/${ABHINAV_WHATSAPP_NUMBER}?text=${encodeURIComponent(
+        whatsappMessage
+      )}`,
       "_blank"
     );
 
@@ -113,7 +115,7 @@ export function InquiryForm() {
         </h3>
 
         <p className="mx-auto mt-3 max-w-xl text-slate-600">
-          Your inquiry was saved and opened in WhatsApp. An Al Qibla travel
+          Your inquiry was saved and opened in WhatsApp. A Journey Genie travel
           specialist will respond shortly.
         </p>
 
@@ -176,10 +178,7 @@ export function InquiryForm() {
                 </span>
 
                 <div>
-                  <h3 className="text-sm font-semibold">
-                    {title}
-                  </h3>
-
+                  <h3 className="text-sm font-semibold">{title}</h3>
                   <p className="mt-1 text-xs leading-5 text-white/55">
                     {text}
                   </p>
@@ -205,16 +204,13 @@ export function InquiryForm() {
             </p>
 
             <h2 className="font-heading text-2xl font-bold text-navy">
-              Plan with Al Qibla
+              Plan with Journey Genie
             </h2>
           </div>
         </div>
 
         <div className="mt-7 space-y-7">
-          <FormSection
-            title="Your contact details"
-            number="01"
-          >
+          <FormSection title="Your contact details" number="01">
             <div className="grid gap-4 sm:grid-cols-2">
               <Field label="Full name *">
                 <Input
@@ -263,10 +259,7 @@ export function InquiryForm() {
             </Field>
           </FormSection>
 
-          <FormSection
-            title="Travel plan"
-            number="02"
-          >
+          <FormSection title="Travel plan" number="02">
             <Field label="Service required *">
               <Select
                 value={form.service}
@@ -293,10 +286,7 @@ export function InquiryForm() {
                     "Hotel",
                     "Other",
                   ].map((s) => (
-                    <SelectItem
-                      key={s}
-                      value={s}
-                    >
+                    <SelectItem key={s} value={s}>
                       {s}
                     </SelectItem>
                   ))}
@@ -305,10 +295,7 @@ export function InquiryForm() {
             </Field>
 
             <div className="grid gap-4 sm:grid-cols-2">
-              <Field
-                label="Departure city"
-                icon={MapPin}
-              >
+              <Field label="Departure city" icon={MapPin}>
                 <Input
                   placeholder="Amritsar, Punjab..."
                   className="h-12 rounded-xl border-navy/10 bg-[#faf8f4]"
@@ -322,10 +309,7 @@ export function InquiryForm() {
                 />
               </Field>
 
-              <Field
-                label="Travel date"
-                icon={CalendarDays}
-              >
+              <Field label="Travel date" icon={CalendarDays}>
                 <Input
                   type="date"
                   className="h-12 rounded-xl border-navy/10 bg-[#faf8f4]"
@@ -408,14 +392,14 @@ export function InquiryForm() {
             className="h-13 w-full rounded-xl text-base shadow-lg shadow-gold/20"
             disabled={loading}
           >
-            {loading
-              ? "Preparing your request..."
-              : (
-                <>
-                  Continue securely on WhatsApp
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </>
-              )}
+            {loading ? (
+              "Preparing your request..."
+            ) : (
+              <>
+                Continue securely on WhatsApp
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </>
+            )}
           </Button>
         </div>
       </form>
