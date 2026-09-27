@@ -1,38 +1,20 @@
 import { redirect } from "next/navigation";
-import { LoginForm } from "@/components/account/LoginForm";
-import { AccountAccessShell } from "@/components/account/AccountAccessShell";
-import { createClient } from "@/lib/supabase/server";
-import { isSupabaseConfigured } from "@/lib/supabase/env";
-import { createPageMetadata } from "@/lib/metadata";
 
-export const metadata = createPageMetadata({
-  title: "Customer Sign In",
-  description: "Sign in to manage Al Qibla booking requests and travel details.",
-  path: "/account/login/",
-});
+export const metadata = {
+  title: "Journey Genie Agent Portal",
+  description:
+    "Connect with Journey Genie for travel partnership and agent support.",
+};
 
-export default async function AccountLoginPage({
-  searchParams,
-}: {
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
-}) {
-  const params = await searchParams;
-  const nextPath = pickNext(params.next);
+export default function AccountLoginPage() {
+  const whatsappNumber = "919876260822";
 
-  if (isSupabaseConfigured()) {
-    const supabase = await createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (user) redirect(nextPath || "/account/");
-  }
+  const message =
+    "Hi Abhinav, I am interested in becoming a Journey Genie Travel Partner. Please share the details.";
 
-  return <AccountAccessShell mode="login"><LoginForm nextPath={nextPath} /></AccountAccessShell>;
-}
+  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+    message
+  )}`;
 
-function pickNext(value: string | string[] | undefined) {
-  const raw = Array.isArray(value) ? value[0] : value;
-  if (!raw || !raw.startsWith("/")) return "/account/";
-  if (raw.startsWith("//")) return "/account/";
-  return raw;
+  redirect(whatsappUrl);
 }
