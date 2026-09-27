@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
+
 import {
   MessageCircle,
   SlidersHorizontal,
@@ -10,6 +11,7 @@ import {
 import { TicketCard } from "@/components/tickets/TicketCard";
 import { TicketFiltersPanel } from "@/components/tickets/TicketFiltersPanel";
 import { Button } from "@/components/ui/button";
+
 import {
   Sheet,
   SheetContent,
@@ -24,6 +26,7 @@ import {
 } from "@/lib/ticket-filters";
 
 import { airlines } from "@/data/airlines";
+
 import type {
   Ticket,
   TicketFilters,
@@ -100,7 +103,6 @@ const INDIA_AIRPORT_CODES = new Set([
   "VGA",
   "TIR",
   "IXE",
-  "IXB",
   "IXS",
   "IXI",
   "IMF",
@@ -113,9 +115,7 @@ const INDIA_AIRPORT_CODES = new Set([
   "IXN",
   "CNN",
   "CCJ",
-  "IXM",
   "TCR",
-  "IXZ",
 ]);
 
 export interface TicketsPageClientProps {
@@ -233,10 +233,13 @@ export function TicketsPageClient({
 
   return (
     <div className="space-y-8">
+
       {/* India-first introduction */}
       <section className="rounded-2xl border bg-background p-5 shadow-sm sm:p-7">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+
           <div className="max-w-3xl">
+
             <p className="text-sm font-semibold uppercase tracking-wide text-primary">
               Journey Genie Flights
             </p>
@@ -254,6 +257,7 @@ export function TicketsPageClient({
             </p>
 
             <div className="mt-4 flex flex-wrap gap-2 text-xs font-medium text-muted-foreground">
+
               <span className="rounded-full bg-muted px-3 py-1.5">
                 🇮🇳 India Domestic
               </span>
@@ -269,6 +273,7 @@ export function TicketsPageClient({
               <span className="rounded-full bg-muted px-3 py-1.5">
                 💬 WhatsApp Support
               </span>
+
             </div>
           </div>
 
@@ -281,12 +286,15 @@ export function TicketsPageClient({
             <MessageCircle className="h-4 w-4" />
             Check Fare on WhatsApp
           </a>
+
         </div>
       </section>
 
       {/* Popular routes */}
       <section>
+
         <div className="mb-3">
+
           <h3 className="font-heading text-lg font-bold text-navy">
             Popular International Routes From India
           </h3>
@@ -295,9 +303,11 @@ export function TicketsPageClient({
             Send us your route and travel date.
             We will check the available options.
           </p>
+
         </div>
 
         <div className="flex flex-wrap gap-2">
+
           {[
             "Delhi → Dubai",
             "Delhi → Bali",
@@ -320,11 +330,13 @@ export function TicketsPageClient({
               {route}
             </a>
           ))}
+
         </div>
       </section>
 
       {/* Filters + results */}
       <div className="grid gap-6 lg:grid-cols-[300px_1fr] lg:gap-8">
+
         <aside className="hidden lg:sticky lg:top-24 lg:block lg:self-start">
           <TicketFiltersPanel
             filters={filters}
@@ -335,9 +347,12 @@ export function TicketsPageClient({
         </aside>
 
         <div className="space-y-4">
+
           {/* Results header */}
           <div className="flex flex-col gap-3 rounded-xl border bg-background p-4 sm:flex-row sm:items-center sm:justify-between">
+
             <div>
+
               <p className="text-sm text-muted-foreground">
                 Showing{" "}
                 <strong className="text-navy">
@@ -357,12 +372,14 @@ export function TicketsPageClient({
                   India-origin flights
                 </p>
               )}
+
             </div>
 
             <Sheet
               open={filtersOpen}
               onOpenChange={setFiltersOpen}
             >
+
               <SheetTrigger
                 render={
                   <Button
@@ -371,6 +388,7 @@ export function TicketsPageClient({
                     className="lg:hidden"
                   >
                     <SlidersHorizontal className="mr-2 h-4 w-4" />
+
                     Filters
 
                     {activeFilterCount >
@@ -387,6 +405,7 @@ export function TicketsPageClient({
                 side="bottom"
                 className="max-h-[85vh] overflow-y-auto rounded-t-2xl"
               >
+
                 <SheetHeader>
                   <SheetTitle className="font-heading text-navy">
                     Filter Flights
@@ -394,6 +413,7 @@ export function TicketsPageClient({
                 </SheetHeader>
 
                 <div className="mt-4 pb-6">
+
                   <TicketFiltersPanel
                     filters={filters}
                     onChange={(next) => {
@@ -413,48 +433,18 @@ export function TicketsPageClient({
                     {filtered.length}{" "}
                     flights
                   </Button>
+
                 </div>
               </SheetContent>
             </Sheet>
+
           </div>
 
-          {/* No India inventory */}
-          {indiaTickets.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-border p-10 text-center sm:p-14">
-              <div className="mx-auto max-w-2xl">
-                <p className="text-lg font-bold text-navy">
-                  Looking for a flight from India?
-                </p>
+          {/* Results */}
+          {filtered.length === 0 ? (
 
-                <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                  Our India flight inventory is
-                  currently being updated. Send
-                  your departure city, destination
-                  and travel date to Journey Genie
-                  on WhatsApp and our travel team
-                  will check the available options
-                  for you.
-                </p>
-
-                <a
-                  href={generalWhatsAppUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-6 inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
-                >
-                  <MessageCircle className="h-4 w-4" />
-                  Check Fare on WhatsApp
-                </a>
-
-                <p className="mt-4 text-xs text-muted-foreground">
-                  Domestic & International
-                  Flights · India to Worldwide
-                  Destinations
-                </p>
-              </div>
-            </div>
-          ) : filtered.length === 0 ? (
             <div className="rounded-xl border border-dashed border-border p-10 text-center sm:p-12">
+
               <p className="font-medium text-navy">
                 No matching India flight found.
               </p>
@@ -466,6 +456,7 @@ export function TicketsPageClient({
               </p>
 
               <div className="mt-4 flex flex-col justify-center gap-3 sm:flex-row">
+
                 {activeFilterCount >
                   0 && (
                   <Button
@@ -488,11 +479,18 @@ export function TicketsPageClient({
                   <MessageCircle className="h-4 w-4" />
                   Ask Journey Genie
                 </a>
+
               </div>
+
             </div>
+
           ) : (
+
             <>
+
+              {/* Flight cards */}
               <div className="space-y-4">
+
                 {visible.map(
                   (ticket) => (
                     <div
@@ -505,11 +503,14 @@ export function TicketsPageClient({
                     </div>
                   )
                 )}
+
               </div>
 
+              {/* Load more */}
               {visibleCount <
                 filtered.length && (
                 <div className="flex justify-center pt-2">
+
                   <Button
                     type="button"
                     variant="outline"
@@ -521,11 +522,13 @@ export function TicketsPageClient({
                   >
                     Load more flights
                   </Button>
+
                 </div>
               )}
 
               {/* WhatsApp CTA */}
               <section className="rounded-2xl border bg-muted/40 p-6 text-center sm:p-8">
+
                 <h3 className="font-heading text-xl font-bold text-navy">
                   Found a better fare somewhere else?
                 </h3>
@@ -547,9 +550,13 @@ export function TicketsPageClient({
                   <MessageCircle className="h-4 w-4" />
                   Send Fare on WhatsApp
                 </a>
+
               </section>
+
             </>
+
           )}
+
         </div>
       </div>
     </div>
