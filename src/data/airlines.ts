@@ -1,15 +1,61 @@
 import type { Airline } from "@/types";
 
 const codes = [
-  "PK", "PA", "PF", "9P", "ER", "EK", "EY", "FZ", "G9", "QR", "SV", "XY", "F3",
-  "WY", "OV", "KU", "J9", "GF", "TK", "PC", "BA", "VS", "CA", "CZ", "OD", "TG",
-  "UL", "HY", "KC", "FS", "J2", "LH", "ET",
+  // Indian airlines
+  "AI",
+  "6E",
+  "IX",
+  "QP",
+  "SG",
+  "9I",
+
+  // Existing international airlines
+  "PA",
+  "PF",
+  "9P",
+  "ER",
+  "EK",
+  "EY",
+  "FZ",
+  "G9",
+  "QR",
+  "SV",
+  "XY",
+  "F3",
+  "WY",
+  "OV",
+  "KU",
+  "J9",
+  "GF",
+  "TK",
+  "PC",
+  "BA",
+  "VS",
+  "CA",
+  "CZ",
+  "OD",
+  "TG",
+  "UL",
+  "HY",
+  "KC",
+  "FS",
+  "J2",
+  "LH",
+  "ET",
 ] as const;
 
 export type AirlineCode = (typeof codes)[number];
 
 const names: Record<AirlineCode, string> = {
-  PK: "PIA",
+  // Indian airlines
+  AI: "Air India",
+  "6E": "IndiGo",
+  IX: "Air India Express",
+  QP: "Akasa Air",
+  SG: "SpiceJet",
+  "9I": "Alliance Air",
+
+  // Existing airlines
   PA: "Airblue",
   PF: "Air Sial",
   "9P": "Fly Jinnah",
@@ -44,11 +90,24 @@ const names: Record<AirlineCode, string> = {
   ET: "Ethiopian",
 };
 
-/** Name aliases → canonical IATA (covers supplier spelling variants). */
+/** Name aliases → canonical IATA. */
 const NAME_TO_CODE: Record<string, AirlineCode> = {
-  pia: "PK",
-  "pakistan international": "PK",
-  "pakistan international airlines": "PK",
+  // Indian airlines
+  "air india": "AI",
+  airindia: "AI",
+  "indigo": "6E",
+  "indigo airlines": "6E",
+  "interglobe aviation": "6E",
+  "air india express": "IX",
+  airindiaexpress: "IX",
+  "akasa air": "QP",
+  akasa: "QP",
+  "spicejet": "SG",
+  "spice jet": "SG",
+  "alliance air": "9I",
+  allianceair: "9I",
+
+  // Existing airlines
   airblue: "PA",
   "air blue": "PA",
   airsial: "PF",
@@ -94,8 +153,16 @@ const NAME_TO_CODE: Record<string, AirlineCode> = {
   ethiopian: "ET",
 };
 
-const regions: Record<string, Airline["regions"]> = {
-  PK: ["Domestic", "International"],
+const regions: Partial<Record<AirlineCode, Airline["regions"]>> = {
+  // Indian airlines
+  AI: ["Domestic", "International"],
+  "6E": ["Domestic", "International"],
+  IX: ["Domestic", "International"],
+  QP: ["Domestic", "International"],
+  SG: ["Domestic", "International"],
+  "9I": ["Domestic", "International"],
+
+  // Existing Pakistan / regional airlines
   PA: ["Domestic", "International"],
   PF: ["Domestic", "International"],
   "9P": ["Domestic", "International"],
@@ -106,10 +173,16 @@ export function airlineLogoPath(code: string): string {
   return `/assets/airlines/${code.trim().toLowerCase()}.png`;
 }
 
-export function getAirlineByCode(code?: string | null): Airline | undefined {
+export function getAirlineByCode(
+  code?: string | null
+): Airline | undefined {
   if (!code) return undefined;
+
   const normalized = code.trim().toUpperCase();
-  return airlines.find((airline) => airline.code === normalized);
+
+  return airlines.find(
+    (airline) => airline.code === normalized
+  );
 }
 
 export function resolveAirlineCode(input?: {
@@ -117,41 +190,97 @@ export function resolveAirlineCode(input?: {
   name?: string | null;
   flightNumber?: string | null;
 }): string {
-  const fromFlight = input?.flightNumber?.match(/^([A-Z0-9]{2})/i)?.[1]?.toUpperCase();
-  if (fromFlight && names[fromFlight as AirlineCode]) return fromFlight;
+  const fromFlight =
+    input?.flightNumber
+      ?.match(/^([A-Z0-9]{2})/i)?.[1]
+      ?.toUpperCase();
+
+  if (
+    fromFlight &&
+    names[fromFlight as AirlineCode]
+  ) {
+    return fromFlight;
+  }
 
   const rawCode = input?.code?.trim().toUpperCase();
-  if (rawCode && names[rawCode as AirlineCode]) return rawCode;
 
-  const nameKey = (input?.name || "").trim().toLowerCase();
-  if (nameKey && NAME_TO_CODE[nameKey]) return NAME_TO_CODE[nameKey];
+  if (
+    rawCode &&
+    names[rawCode as AirlineCode]
+  ) {
+    return rawCode;
+  }
 
-  if (rawCode && /^[A-Z0-9]{2}$/.test(rawCode)) return rawCode;
-  if (fromFlight) return fromFlight;
+  const nameKey = (input?.name || "")
+    .trim()
+    .toLowerCase();
+
+  if (
+    nameKey &&
+    NAME_TO_CODE[nameKey]
+  ) {
+    return NAME_TO_CODE[nameKey];
+  }
+
+  if (
+    rawCode &&
+    /^[A-Z0-9]{2}$/.test(rawCode)
+  ) {
+    return rawCode;
+  }
+
+  if (fromFlight) {
+    return fromFlight;
+  }
+
   return "XX";
 }
 
 /**
- * Prefer the canonical brand for a known IATA code so UI never shows a bare
- * code (or a stale supplier alias) when we know the live carrier.
+ * Prefer the canonical brand for a known IATA code
+ * so UI never shows a bare code when we know the carrier.
  */
-export function resolveAirlineName(code?: string | null, fallbackName?: string | null): string {
-  const resolvedCode = resolveAirlineCode({ code, name: fallbackName });
-  const known = names[resolvedCode as AirlineCode];
-  if (known) return known;
+export function resolveAirlineName(
+  code?: string | null,
+  fallbackName?: string | null
+): string {
+  const resolvedCode = resolveAirlineCode({
+    code,
+    name: fallbackName,
+  });
+
+  const known =
+    names[resolvedCode as AirlineCode];
+
+  if (known) {
+    return known;
+  }
 
   const fallback = (fallbackName || "").trim();
-  if (fallback && fallback.toUpperCase() !== resolvedCode && fallback.toLowerCase() !== "unknown") {
+
+  if (
+    fallback &&
+    fallback.toUpperCase() !== resolvedCode &&
+    fallback.toLowerCase() !== "unknown"
+  ) {
     return fallback;
   }
-  return resolvedCode === "XX" ? "Airline" : resolvedCode;
+
+  return resolvedCode === "XX"
+    ? "Airline"
+    : resolvedCode;
 }
 
-export const airlines: Airline[] = codes.map((code) => ({
-  code,
-  name: names[code],
-  // PNG files are the downloaded carrier marks. The SVG files are only
-  // letter-code fallbacks and should not be presented as official logos.
-  logo: airlineLogoPath(code),
-  regions: regions[code] ?? ["International"],
-}));
+export const airlines: Airline[] = codes.map(
+  (code) => ({
+    code,
+    name: names[code],
+
+    // PNG files are the downloaded carrier marks.
+    // AirlineLogo provides the fallback if a logo is unavailable.
+    logo: airlineLogoPath(code),
+
+    regions:
+      regions[code] ?? ["International"],
+  })
+);
