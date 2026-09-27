@@ -230,6 +230,8 @@ export function Footer() {
             </h3>
 
             <div className="mt-5 space-y-3.5 text-sm">
+
+              {/* Phone */}
               <a
                 href={`tel:${OFFICES.headOffice.phoneTel}`}
                 className="flex items-center gap-3 text-white/65 transition hover:text-white"
@@ -241,6 +243,7 @@ export function Footer() {
                 {OFFICES.headOffice.phone}
               </a>
 
+              {/* WhatsApp */}
               <a
                 href={SITE.whatsapp}
                 target="_blank"
@@ -254,8 +257,9 @@ export function Footer() {
                 WhatsApp {SITE.whatsappNumber}
               </a>
 
+              {/* Email */}
               <a
-                href={`mailto:${SITE.email}`}
+                href="mailto:abhinav042@gmail.com"
                 className="flex items-center gap-3 text-white/65 transition hover:text-white"
               >
                 <IconBubble>
@@ -263,10 +267,11 @@ export function Footer() {
                 </IconBubble>
 
                 <span className="break-all">
-                  {SITE.email}
+                  abhinav042@gmail.com
                 </span>
               </a>
 
+              {/* Business Hours */}
               <p className="flex items-start gap-3 text-white/45">
                 <IconBubble>
                   <Clock className="h-4 w-4" />
