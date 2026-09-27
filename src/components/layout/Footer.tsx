@@ -7,7 +7,7 @@ import {
   BadgeCheck,
   Clock,
   Globe,
-  Linkedin,
+  LinkedinIcon,
   Mail,
   MapPin,
   Phone,
@@ -18,11 +18,14 @@ import {
   InstagramIcon,
   WhatsAppIcon,
 } from "@/components/shared/SocialIcons";
+
 import { GsapReveal } from "@/components/motion/GsapReveal";
+
 import {
   GsapStagger,
   GsapStaggerItem,
 } from "@/components/motion/GsapStagger";
+
 import {
   OFFICES,
   SITE,
@@ -53,14 +56,14 @@ const socialLinks = [
     Icon: InstagramIcon,
   },
   {
+    href: "https://www.linkedin.com/company/journey-genie/?viewAsMember=true",
+    label: "LinkedIn",
+    Icon: LinkedinIcon,
+  },
+  {
     href: SOCIAL.whatsapp,
     label: "WhatsApp",
     Icon: WhatsAppIcon,
-  },
-  {
-    href: "https://www.linkedin.com/company/journey-genie/?viewAsMember=true",
-    label: "LinkedIn",
-    Icon: Linkedin,
   },
 ] as const;
 
@@ -286,12 +289,10 @@ export function Footer() {
                 className="flex items-center gap-3 text-white/65 transition hover:text-white"
               >
                 <IconBubble>
-                  <Linkedin className="h-4 w-4" />
+                  <LinkedinIcon className="h-4 w-4" />
                 </IconBubble>
 
-                <span>
-                  LinkedIn
-                </span>
+                <span>LinkedIn</span>
               </a>
 
               {/* Business Hours */}
@@ -383,6 +384,7 @@ function FooterLinks({
               className="group inline-flex items-center gap-1.5 text-sm text-white/55 transition hover:translate-x-0.5 hover:text-white"
             >
               {label}
+
               <ArrowUpRight className="h-3 w-3 opacity-0 transition group-hover:opacity-100" />
             </Link>
           </li>
