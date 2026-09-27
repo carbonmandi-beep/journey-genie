@@ -1,25 +1,44 @@
 import Link from "next/link";
-import { ArrowRight, BadgeCheck, Briefcase, Plane, ShieldCheck, Sparkles } from "lucide-react";
+import {
+  ArrowRight,
+  BadgeCheck,
+  Briefcase,
+  MessageCircle,
+  Plane,
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react";
 import { AnimatedFlightPath } from "@/components/motion/AnimatedFlightPath";
 import { createPageMetadata } from "@/lib/metadata";
 import { PAGE_SEO } from "@/lib/seo";
 
 export const metadata = createPageMetadata({
-  title: PAGE_SEO.portal.title,
-  description: PAGE_SEO.portal.description,
+  title: "Agent Portal | Journey Genie",
+  description:
+    "Connect with Journey Genie for agent bookings, travel support and partnership enquiries.",
   path: PAGE_SEO.portal.path,
   keywords: PAGE_SEO.portal.keywords,
 });
 
+const ABHINAV_WHATSAPP_NUMBER = "919876260822";
+
+const whatsappMessage =
+  "Hi Abhinav, I am interested in becoming a Journey Genie Travel Partner. Please share the details.";
+
+const whatsappUrl = `https://wa.me/${ABHINAV_WHATSAPP_NUMBER}?text=${encodeURIComponent(
+  whatsappMessage
+)}`;
+
 const entries = [
   {
     icon: Briefcase,
-    eyebrow: "Sub-agents",
-    title: "Sub-agent account",
-    text: "Sign in to manage your company profile, approval status, and booking requests in one workspace.",
-    href: "/account/login/",
-    action: "Enter agent portal",
+    eyebrow: "Journey Genie Partners",
+    title: "Agent Portal",
+    text: "Connect with Journey Genie for agent bookings, travel support, partnership opportunities and business enquiries.",
+    href: whatsappUrl,
+    action: "Contact us on WhatsApp",
     accent: "bg-[#dcebe5] text-[#31715f]",
+    external: true,
   },
   {
     icon: Plane,
@@ -29,6 +48,7 @@ const entries = [
     href: "/available-tickets/",
     action: "Browse available flights",
     accent: "bg-[#f6e9c8] text-[#9a6b15]",
+    external: false,
   },
 ] as const;
 
@@ -42,16 +62,26 @@ export default function PortalPage() {
       <div className="container-wide relative">
         <section className="relative overflow-hidden rounded-[2rem] bg-[#071d38] px-7 py-12 text-white shadow-[0_30px_90px_rgba(7,29,56,.2)] sm:px-12 lg:px-16 lg:py-16">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_82%_20%,rgba(214,168,79,.2),transparent_25%),linear-gradient(135deg,transparent_45%,rgba(33,91,105,.45))]" />
-          <AnimatedFlightPath variant="section" className="bottom-0 top-auto h-28 opacity-70" />
+
+          <AnimatedFlightPath
+            variant="section"
+            className="bottom-0 top-auto h-28 opacity-70"
+          />
+
           <div className="relative max-w-3xl">
             <span className="inline-flex items-center gap-2 rounded-full border border-gold/25 bg-gold/10 px-4 py-2 text-xs font-bold uppercase tracking-[.2em] text-gold-light">
-              <Sparkles className="h-4 w-4" /> Secure B2B access
+              <Sparkles className="h-4 w-4" />
+              Journey Genie Partners
             </span>
+
             <h1 className="mt-6 font-heading text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
-              Your agency workspace, ready when you are.
+              Your travel partnership starts here.
             </h1>
+
             <p className="mt-5 max-w-2xl text-base leading-7 text-white/65">
-              Sign in to manage company bookings, or browse live group inventory built for travel agents.
+              Connect with Journey Genie for agent bookings, travel support,
+              partnership opportunities and access to available travel
+              inventory.
             </p>
           </div>
         </section>
@@ -62,30 +92,63 @@ export default function PortalPage() {
               key={entry.title}
               className="group relative overflow-hidden rounded-3xl border border-white bg-white/85 p-7 shadow-[0_18px_55px_rgba(25,45,65,.09)] backdrop-blur transition duration-300 hover:-translate-y-1 hover:border-gold/35 hover:shadow-[0_24px_70px_rgba(25,45,65,.14)] sm:p-8"
             >
-              <div className={`flex h-13 w-13 items-center justify-center rounded-2xl ${entry.accent}`}>
+              <div
+                className={`flex h-13 w-13 items-center justify-center rounded-2xl ${entry.accent}`}
+              >
                 <entry.icon className="h-6 w-6" />
               </div>
-              <p className="mt-7 text-[10px] font-bold uppercase tracking-[.2em] text-[#a66d2f]">{entry.eyebrow}</p>
-              <h2 className="mt-2 font-heading text-2xl font-bold text-navy">{entry.title}</h2>
-              <p className="mt-3 min-h-20 text-sm leading-6 text-slate-600">{entry.text}</p>
-              <Link
-                href={entry.href}
-                className="mt-7 inline-flex items-center gap-2 font-bold text-navy transition group-hover:text-[#a66d2f]"
-              >
-                {entry.action}
-                <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
-              </Link>
+
+              <p className="mt-7 text-[10px] font-bold uppercase tracking-[.2em] text-[#a66d2f]">
+                {entry.eyebrow}
+              </p>
+
+              <h2 className="mt-2 font-heading text-2xl font-bold text-navy">
+                {entry.title}
+              </h2>
+
+              <p className="mt-3 min-h-20 text-sm leading-6 text-slate-600">
+                {entry.text}
+              </p>
+
+              {entry.external ? (
+                <a
+                  href={entry.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-7 inline-flex items-center gap-2 font-bold text-navy transition group-hover:text-[#a66d2f]"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  {entry.action}
+                  <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                </a>
+              ) : (
+                <Link
+                  href={entry.href}
+                  className="mt-7 inline-flex items-center gap-2 font-bold text-navy transition group-hover:text-[#a66d2f]"
+                >
+                  {entry.action}
+                  <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                </Link>
+              )}
             </article>
           ))}
         </div>
 
         <div className="mt-8 flex flex-col items-center justify-between gap-4 rounded-2xl border border-[#d8c7ad] bg-[#eee1ce]/70 px-6 py-5 text-center sm:flex-row sm:text-left">
           <p className="flex items-center gap-2 font-semibold text-navy">
-            <ShieldCheck className="h-5 w-5 text-[#8c6636]" /> New agency? Register with your full company details.
+            <ShieldCheck className="h-5 w-5 text-[#8c6636]" />
+            Ready to partner with Journey Genie?
           </p>
-          <Link href="/account/signup/" className="inline-flex items-center gap-2 font-bold text-[#8c5d28]">
-            Become a sub-agent <BadgeCheck className="h-4 w-4" />
-          </Link>
+
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 font-bold text-[#8c5d28]"
+          >
+            Contact us on WhatsApp
+            <BadgeCheck className="h-4 w-4" />
+          </a>
         </div>
       </div>
     </main>
