@@ -7,6 +7,7 @@ import {
   BadgeCheck,
   Clock,
   Globe,
+  Linkedin,
   Mail,
   MapPin,
   Phone,
@@ -55,6 +56,11 @@ const socialLinks = [
     href: SOCIAL.whatsapp,
     label: "WhatsApp",
     Icon: WhatsAppIcon,
+  },
+  {
+    href: "https://www.linkedin.com/company/journey-genie/?viewAsMember=true",
+    label: "LinkedIn",
+    Icon: Linkedin,
   },
 ] as const;
 
@@ -185,6 +191,7 @@ export function Footer() {
               })}
             </div>
 
+            {/* SOCIAL LINKS */}
             <div className="mt-5 flex gap-2.5">
               {socialLinks.map(
                 ({ href, label, Icon }) => (
@@ -268,6 +275,22 @@ export function Footer() {
 
                 <span className="break-all">
                   abhinav042@gmail.com
+                </span>
+              </a>
+
+              {/* LinkedIn */}
+              <a
+                href="https://www.linkedin.com/company/journey-genie/?viewAsMember=true"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 text-white/65 transition hover:text-white"
+              >
+                <IconBubble>
+                  <Linkedin className="h-4 w-4" />
+                </IconBubble>
+
+                <span>
+                  LinkedIn
                 </span>
               </a>
 
