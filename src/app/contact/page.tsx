@@ -23,7 +23,7 @@ export const metadata = createPageMetadata({
   title: PAGE_SEO.contact.title,
   description: PAGE_SEO.contact.description,
   path: PAGE_SEO.contact.path,
-  keywords: PAGE_SEO.contact.keywords, 
+  keywords: PAGE_SEO.contact.keywords,
 });
 
 function LinkedinIcon({
@@ -38,7 +38,7 @@ function LinkedinIcon({
       fill="currentColor"
       aria-hidden="true"
     >
-      <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.61 0 4.27 2.37 4.27 5.46v6.28zM5.32 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM3.54 20.45H7.1V9H3.54v11.45zM22.22 0H1.78C.8 0 0 .77 0 1.72v20.56C0 23.23.8 24 1.78 24h20.44C23.2 24 24 23.23 24 22.28V1.72C24 .77 23.2 0 22.22 0z" />
+      <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.61 0 4.27 2.37 4.27 5.46v6.28zM5.32 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM3.54 20.45H7.1V9H3.54v11.45zM22.22 0H1.78C.8 0 0 .77 0 1.72v20.56C0 23.23.8 24 1.78 24h20.44C23.2 24 24 23.23 22.22 0z" />
     </svg>
   );
 }
@@ -113,17 +113,19 @@ export default function ContactPage() {
 
                 <ul className="mt-5 space-y-4 text-sm text-muted-foreground">
 
+                  {/* EMAIL */}
                   <li className="flex items-center gap-3">
                     <Mail className="h-4 w-4 shrink-0 text-gold" />
 
                     <a
-                      href={`mailto:${SITE.email}`}
+                      href="mailto:abhinav042@gmail.com"
                       className="transition hover:text-gold"
                     >
-                      {SITE.email}
+                      abhinav042@gmail.com
                     </a>
                   </li>
 
+                  {/* WHATSAPP */}
                   <li className="flex items-center gap-3">
                     <MessageCircle className="h-4 w-4 shrink-0 text-gold" />
 
@@ -137,6 +139,7 @@ export default function ContactPage() {
                     </a>
                   </li>
 
+                  {/* BUSINESS HOURS */}
                   <li className="flex items-center gap-3">
                     <Clock className="h-4 w-4 shrink-0 text-gold" />
                     {SITE.businessHours}
