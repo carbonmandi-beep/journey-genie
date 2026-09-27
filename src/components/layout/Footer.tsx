@@ -7,7 +7,6 @@ import {
   BadgeCheck,
   Clock,
   Globe,
-  LinkedinIcon,
   Mail,
   MapPin,
   Phone,
@@ -58,7 +57,7 @@ const socialLinks = [
   {
     href: "https://www.linkedin.com/company/journey-genie/?viewAsMember=true",
     label: "LinkedIn",
-    Icon: LinkedinIcon,
+    Icon: LinkedInIcon,
   },
   {
     href: SOCIAL.whatsapp,
@@ -194,7 +193,7 @@ export function Footer() {
               })}
             </div>
 
-            {/* SOCIAL LINKS */}
+            {/* Social Icons */}
             <div className="mt-5 flex gap-2.5">
               {socialLinks.map(
                 ({ href, label, Icon }) => (
@@ -289,7 +288,7 @@ export function Footer() {
                 className="flex items-center gap-3 text-white/65 transition hover:text-white"
               >
                 <IconBubble>
-                  <LinkedinIcon className="h-4 w-4" />
+                  <LinkedInIcon className="h-4 w-4" />
                 </IconBubble>
 
                 <span>LinkedIn</span>
@@ -312,6 +311,7 @@ export function Footer() {
               className="group mt-5 inline-flex items-center gap-2 rounded-xl border border-gold/30 bg-gold/[0.06] px-4 py-2.5 text-sm font-semibold text-gold-light transition hover:-translate-y-0.5 hover:border-gold/50 hover:bg-gold/10 hover:text-gold"
             >
               Contact Journey Genie
+
               <ArrowUpRight className="h-4 w-4 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </Link>
           </GsapStaggerItem>
@@ -321,11 +321,13 @@ export function Footer() {
       {/* Bottom */}
       <div className="border-t border-white/10">
         <div className="container-wide flex flex-col gap-4 py-5 text-xs text-white/55 sm:flex-row sm:items-center sm:justify-between">
+
           <p>
             © {new Date().getFullYear()} {SITE.name}. All rights reserved.
           </p>
 
           <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
+
             <Link
               href="/privacy-policy/"
               className="transition hover:text-white/90"
@@ -342,12 +344,38 @@ export function Footer() {
               <ShieldCheck className="h-3.5 w-3.5 text-gold" />
               Your Magical Travel Partner
             </span>
+
           </div>
         </div>
       </div>
     </footer>
   );
 }
+
+/* =========================================================
+   INLINE LINKEDIN ICON
+   ========================================================= */
+
+function LinkedInIcon({
+  className = "h-4 w-4",
+}: {
+  className?: string;
+}) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+      className={className}
+    >
+      <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.44-2.13 2.94v5.67H9.35V8.99h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.26 2.37 4.26 5.46v6.29ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM3.56 20.45h3.56V8.99H3.56v11.46ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z" />
+    </svg>
+  );
+}
+
+/* =========================================================
+   ICON BUBBLE
+   ========================================================= */
 
 function IconBubble({
   children,
@@ -360,6 +388,10 @@ function IconBubble({
     </span>
   );
 }
+
+/* =========================================================
+   FOOTER LINKS
+   ========================================================= */
 
 function FooterLinks({
   title,
