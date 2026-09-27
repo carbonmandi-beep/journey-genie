@@ -19,7 +19,7 @@ import { SITE } from "@/lib/constants";
 const WHATSAPP_NUMBER = "919876260822";
 
 const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-  "Hi Abhinav, I need help with visa assistance through Journey Genie. Please share the details."
+  "Hi Journey Genie, I need help with visa assistance. Please share the details."
 )}`;
 
 const visaServices = [
@@ -95,7 +95,7 @@ export default function VisaAssistancePage() {
         backgroundImage={ASSETS.heroes.services}
         badge="Journey Genie Visa Assistance"
         cta={{
-          label: "Talk to Abhinav",
+          label: "Get Visa Assistance",
           href: whatsappUrl,
         }}
       />
@@ -125,7 +125,7 @@ export default function VisaAssistancePage() {
               const Icon = service.icon;
 
               const serviceWhatsAppUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-                `Hi Abhinav, I need help with ${service.title} through Journey Genie. Please share the details.`
+                `Hi Journey Genie, I need help with ${service.title}. Please share the details.`
               )}`;
 
               return (
@@ -151,7 +151,7 @@ export default function VisaAssistancePage() {
                     rel="noopener noreferrer"
                     className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-royal transition hover:text-gold"
                   >
-                    Ask Abhinav
+                    Ask Journey Genie
                     <ArrowRight className="h-4 w-4" />
                   </a>
                 </article>
@@ -182,7 +182,7 @@ export default function VisaAssistancePage() {
           <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
             {popularVisaDestinations.map((destination) => {
               const destinationWhatsAppUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-                `Hi Abhinav, I need visa assistance for ${destination}. Please share the requirements and process through Journey Genie.`
+                `Hi Journey Genie, I need visa assistance for ${destination}. Please share the requirements and process.`
               )}`;
 
               return (
@@ -295,9 +295,8 @@ export default function VisaAssistancePage() {
               </h3>
 
               <p className="mt-3 text-sm leading-7 text-white/70">
-                Send Abhinav your destination, travel dates and visa
-                requirement. The Journey Genie team will guide you on the next
-                steps.
+                Send your destination, travel dates and visa requirement to
+                Journey Genie. Our team will guide you on the next steps.
               </p>
 
               <a
@@ -307,7 +306,7 @@ export default function VisaAssistancePage() {
                 className="mt-7 inline-flex items-center gap-2 rounded-xl bg-gold px-6 py-3.5 font-bold text-navy transition hover:bg-gold-light"
               >
                 <MessageCircle className="h-5 w-5" />
-                WhatsApp Abhinav
+                WhatsApp
               </a>
             </div>
           </div>
@@ -330,7 +329,7 @@ export default function VisaAssistancePage() {
 
             <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-white/70 sm:text-base">
               Tell us your destination and travel requirements. Connect
-              directly with Abhinav on WhatsApp.
+              directly with Journey Genie on WhatsApp.
             </p>
 
             <div className="mt-8 flex flex-wrap justify-center gap-3">
@@ -340,7 +339,7 @@ export default function VisaAssistancePage() {
                 rel="noopener noreferrer"
                 className="inline-flex h-12 items-center gap-2 rounded-xl bg-gold px-7 font-semibold text-navy transition hover:bg-gold-light"
               >
-                WhatsApp Abhinav
+                WhatsApp
                 <MessageCircle className="h-4 w-4" />
               </a>
 
