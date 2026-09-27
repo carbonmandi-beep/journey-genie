@@ -18,7 +18,9 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps) {
   const { category: slug } = await params;
+
   const category = getExploreCategory(slug);
+
   if (!category || category.kind !== "group-flights") {
     return createPageMetadata({
       title: PAGE_SEO.groupFlights.title,
@@ -29,7 +31,8 @@ export async function generateMetadata({ params }: PageProps) {
   }
 
   const intentTitle = `${category.label} | Group Ticket Booking`;
-  const intentDescription = `Book ${category.label} online with ${SITE.name}. Live group flight ticket booking, seats and fares for ${category.country} group travels — agent and traveler ticketing from Pakistan.`;
+
+  const intentDescription = `Book ${category.label} with ${SITE.name}. Explore group flight ticket options, seats and fares for ${category.country} group travel — serving travelers and travel partners from India.`;
 
   return createPageMetadata({
     title: intentTitle,
@@ -40,20 +43,30 @@ export async function generateMetadata({ params }: PageProps) {
       category.label,
       `${category.country} group tickets`,
       `${category.country} ticket booking`,
-      "group travels",
+      "group travel",
+      "group flight booking",
       "ticket booking",
     ],
   });
 }
 
-export default async function GroupFlightsCategoryPage({ params }: PageProps) {
+export default async function GroupFlightsCategoryPage({
+  params,
+}: PageProps) {
   const { category: slug } = await params;
+
   const category = getExploreCategory(slug);
-  if (!category || category.kind !== "group-flights" || !category.apiCategory) {
+
+  if (
+    !category ||
+    category.kind !== "group-flights" ||
+    !category.apiCategory
+  ) {
     notFound();
   }
 
   const all = await getCachedTickets();
+
   const tickets = toTicketListItems(
     all.filter((t) => t.groupCategory === category.apiCategory)
   );
@@ -64,22 +77,33 @@ export default async function GroupFlightsCategoryPage({ params }: PageProps) {
         title={category.label}
         subtitle={`Live group inventory · ${tickets.length} flights available`}
         backgroundImage="/assets/heroes/tickets.jpg"
-        badge="Agent Portal · Live Inventory"
+        badge="Journey Genie · Live Inventory"
         lite
       />
 
       <section className="relative z-20 -mt-14 pb-4">
         <div className="container-wide">
           <Suspense fallback={null}>
-            <TicketsSearchBar basePath={`/group-flights/${slug}/`} />
+            <TicketsSearchBar
+              basePath={`/group-flights/${slug}/`}
+            />
           </Suspense>
         </div>
       </section>
 
       <section className="section-padding pt-6">
         <div className="container-wide">
-          <Suspense fallback={<div className="text-center text-muted-foreground">Loading flights...</div>}>
-            <GroupFlightsPageClient tickets={tickets} categorySlug={slug} />
+          <Suspense
+            fallback={
+              <div className="text-center text-muted-foreground">
+                Loading flights...
+              </div>
+            }
+          >
+            <GroupFlightsPageClient
+              tickets={tickets}
+              categorySlug={slug}
+            />
           </Suspense>
         </div>
       </section>
