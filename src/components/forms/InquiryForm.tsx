@@ -23,7 +23,6 @@ import {
   PlaneTakeoff,
   UsersRound,
 } from "lucide-react";
-import { whatsappLink } from "@/lib/whatsapp";
 
 const ABHINAV_WHATSAPP_NUMBER = "919876260822";
 
@@ -115,8 +114,8 @@ export function InquiryForm() {
         </h3>
 
         <p className="mx-auto mt-3 max-w-xl text-slate-600">
-          Your inquiry was saved and opened in WhatsApp. A Journey Genie travel
-          specialist will respond shortly.
+          Your inquiry was saved and opened in WhatsApp. A Journey Genie
+          travel specialist will respond shortly.
         </p>
 
         <Button
@@ -179,6 +178,7 @@ export function InquiryForm() {
 
                 <div>
                   <h3 className="text-sm font-semibold">{title}</h3>
+
                   <p className="mt-1 text-xs leading-5 text-white/55">
                     {text}
                   </p>
@@ -210,7 +210,10 @@ export function InquiryForm() {
         </div>
 
         <div className="mt-7 space-y-7">
-          <FormSection title="Your contact details" number="01">
+          <FormSection
+            title="Your contact details"
+            number="01"
+          >
             <div className="grid gap-4 sm:grid-cols-2">
               <Field label="Full name *">
                 <Input
@@ -259,7 +262,10 @@ export function InquiryForm() {
             </Field>
           </FormSection>
 
-          <FormSection title="Travel plan" number="02">
+          <FormSection
+            title="Travel plan"
+            number="02"
+          >
             <Field label="Service required *">
               <Select
                 value={form.service}
@@ -277,25 +283,42 @@ export function InquiryForm() {
                 </SelectTrigger>
 
                 <SelectContent>
-                  {[
-                    "Umrah Package",
-                    "Group Tickets",
-                    "Tour Package",
-                    "Visit Visa",
-                    "Corporate Travel",
-                    "Hotel",
-                    "Other",
-                  ].map((s) => (
-                    <SelectItem key={s} value={s}>
-                      {s}
-                    </SelectItem>
-                  ))}
+                  <SelectItem value="Flight Booking">
+                    Flight Booking
+                  </SelectItem>
+
+                  <SelectItem value="Group Tickets">
+                    Group Tickets
+                  </SelectItem>
+
+                  <SelectItem value="Tour Package">
+                    Tour Package
+                  </SelectItem>
+
+                  <SelectItem value="Visit Visa">
+                    Visit Visa
+                  </SelectItem>
+
+                  <SelectItem value="Corporate Travel">
+                    Corporate Travel
+                  </SelectItem>
+
+                  <SelectItem value="Hotel">
+                    Hotel
+                  </SelectItem>
+
+                  <SelectItem value="Other">
+                    Other
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </Field>
 
             <div className="grid gap-4 sm:grid-cols-2">
-              <Field label="Departure city" icon={MapPin}>
+              <Field
+                label="Departure city"
+                icon={MapPin}
+              >
                 <Input
                   placeholder="Amritsar, Punjab..."
                   className="h-12 rounded-xl border-navy/10 bg-[#faf8f4]"
@@ -309,7 +332,10 @@ export function InquiryForm() {
                 />
               </Field>
 
-              <Field label="Travel date" icon={CalendarDays}>
+              <Field
+                label="Travel date"
+                icon={CalendarDays}
+              >
                 <Input
                   type="date"
                   className="h-12 rounded-xl border-navy/10 bg-[#faf8f4]"
@@ -422,6 +448,7 @@ function FormSection({
         <span className="flex h-7 w-7 items-center justify-center rounded-full bg-navy text-[10px] text-gold">
           {number}
         </span>
+
         {title}
       </legend>
 
@@ -445,6 +472,7 @@ function Field({
         {Icon && (
           <Icon className="h-3.5 w-3.5 text-[#a66d2f]" />
         )}
+
         {label}
       </Label>
 
