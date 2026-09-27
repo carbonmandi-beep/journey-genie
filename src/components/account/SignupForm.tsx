@@ -33,6 +33,7 @@ export function SignupForm({ nextPath }: SignupFormProps) {
     address: "",
     password: "",
   });
+
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -40,6 +41,7 @@ export function SignupForm({ nextPath }: SignupFormProps) {
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
+
     setLoading(true);
     setStatus("idle");
     setMessage("");
@@ -47,7 +49,9 @@ export function SignupForm({ nextPath }: SignupFormProps) {
     try {
       const res = await fetch("/api/account/signup/", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           companyName: form.companyName,
           fullName: form.fullName,
@@ -59,7 +63,11 @@ export function SignupForm({ nextPath }: SignupFormProps) {
           nextPath,
         }),
       });
-      const json = (await res.json().catch(() => ({}))) as { error?: string; message?: string };
+
+      const json = (await res.json().catch(() => ({}))) as {
+        error?: string;
+        message?: string;
+      };
 
       if (!res.ok) {
         setStatus("error");
@@ -69,9 +77,10 @@ export function SignupForm({ nextPath }: SignupFormProps) {
       }
 
       setStatus("success");
+
       setMessage(
         json.message ||
-          "Account created. Check your email from Al Qibla Air Services to confirm your account, then sign in."
+          "Account created successfully. Please check your email from Journey Genie to verify your account. Booking access will activate after administrator review."
       );
     } catch {
       setStatus("error");
@@ -83,7 +92,11 @@ export function SignupForm({ nextPath }: SignupFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
-      <PremiumField icon={Building2} id="signup-company" label="Company / agency name">
+      <PremiumField
+        icon={Building2}
+        id="signup-company"
+        label="Company / agency name"
+      >
         <Input
           id="signup-company"
           required
@@ -91,12 +104,21 @@ export function SignupForm({ nextPath }: SignupFormProps) {
           placeholder="Registered travel agency name"
           className="h-13 rounded-xl border-navy/10 bg-[#faf8f4] pl-11 pr-4 focus-visible:border-gold focus-visible:ring-gold/20"
           value={form.companyName}
-          onChange={(event) => setForm({ ...form, companyName: event.target.value })}
+          onChange={(event) =>
+            setForm({
+              ...form,
+              companyName: event.target.value,
+            })
+          }
         />
       </PremiumField>
 
       <div className="grid gap-4 sm:grid-cols-2">
-        <PremiumField icon={UserRound} id="signup-name" label="Contact person full name">
+        <PremiumField
+          icon={UserRound}
+          id="signup-name"
+          label="Contact person full name"
+        >
           <Input
             id="signup-name"
             required
@@ -104,23 +126,42 @@ export function SignupForm({ nextPath }: SignupFormProps) {
             placeholder="Your full name"
             className="h-13 rounded-xl border-navy/10 bg-[#faf8f4] pl-11 pr-4 focus-visible:border-gold focus-visible:ring-gold/20"
             value={form.fullName}
-            onChange={(event) => setForm({ ...form, fullName: event.target.value })}
+            onChange={(event) =>
+              setForm({
+                ...form,
+                fullName: event.target.value,
+              })
+            }
           />
         </PremiumField>
-        <PremiumField icon={Phone} id="signup-phone" label="Phone / WhatsApp">
+
+        <PremiumField
+          icon={Phone}
+          id="signup-phone"
+          label="Phone / WhatsApp"
+        >
           <Input
             id="signup-phone"
             required
             autoComplete="tel"
-            placeholder="+92 300 0000000"
+            placeholder="+91 98762 60822"
             className="h-13 rounded-xl border-navy/10 bg-[#faf8f4] pl-11 pr-4 focus-visible:border-gold focus-visible:ring-gold/20"
             value={form.phone}
-            onChange={(event) => setForm({ ...form, phone: event.target.value })}
+            onChange={(event) =>
+              setForm({
+                ...form,
+                phone: event.target.value,
+              })
+            }
           />
         </PremiumField>
       </div>
 
-      <PremiumField icon={Mail} id="signup-email" label="Business email">
+      <PremiumField
+        icon={Mail}
+        id="signup-email"
+        label="Business email"
+      >
         <Input
           id="signup-email"
           type="email"
@@ -129,28 +170,48 @@ export function SignupForm({ nextPath }: SignupFormProps) {
           placeholder="bookings@youragency.com"
           className="h-13 rounded-xl border-navy/10 bg-[#faf8f4] pl-11 pr-4 focus-visible:border-gold focus-visible:ring-gold/20"
           value={form.email}
-          onChange={(event) => setForm({ ...form, email: event.target.value })}
+          onChange={(event) =>
+            setForm({
+              ...form,
+              email: event.target.value,
+            })
+          }
         />
       </PremiumField>
 
       <div className="grid gap-4 sm:grid-cols-2">
-        <PremiumField icon={MapPin} id="signup-city" label="City">
+        <PremiumField
+          icon={MapPin}
+          id="signup-city"
+          label="City"
+        >
           <Input
             id="signup-city"
             required
             autoComplete="address-level2"
-            placeholder="Peshawar, Islamabad, Lahore..."
+            placeholder="Amritsar, Delhi, Chandigarh..."
             className="h-13 rounded-xl border-navy/10 bg-[#faf8f4] pl-11 pr-4 focus-visible:border-gold focus-visible:ring-gold/20"
             value={form.city}
-            onChange={(event) => setForm({ ...form, city: event.target.value })}
+            onChange={(event) =>
+              setForm({
+                ...form,
+                city: event.target.value,
+              })
+            }
           />
         </PremiumField>
+
         <div className="space-y-2.5">
-          <Label htmlFor="signup-password" className="font-semibold text-navy">
+          <Label
+            htmlFor="signup-password"
+            className="font-semibold text-navy"
+          >
             Create password
           </Label>
+
           <div className="relative">
             <Lock className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#a66d2f]" />
+
             <Input
               id="signup-password"
               type={showPassword ? "text" : "password"}
@@ -160,24 +221,44 @@ export function SignupForm({ nextPath }: SignupFormProps) {
               placeholder="Minimum 8 characters"
               className="h-13 rounded-xl border-navy/10 bg-[#faf8f4] pl-11 pr-12 focus-visible:border-gold focus-visible:ring-gold/20"
               value={form.password}
-              onChange={(event) => setForm({ ...form, password: event.target.value })}
+              onChange={(event) =>
+                setForm({
+                  ...form,
+                  password: event.target.value,
+                })
+              }
             />
+
             <button
               type="button"
-              onClick={() => setShowPassword((value) => !value)}
+              onClick={() =>
+                setShowPassword((value) => !value)
+              }
               className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 transition hover:text-navy"
-              aria-label={showPassword ? "Hide password" : "Show password"}
+              aria-label={
+                showPassword
+                  ? "Hide password"
+                  : "Show password"
+              }
             >
-              {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              {showPassword ? (
+                <EyeOff className="h-4 w-4" />
+              ) : (
+                <Eye className="h-4 w-4" />
+              )}
             </button>
           </div>
         </div>
       </div>
 
       <div className="space-y-2.5">
-        <Label htmlFor="signup-address" className="font-semibold text-navy">
+        <Label
+          htmlFor="signup-address"
+          className="font-semibold text-navy"
+        >
           Company address
         </Label>
+
         <Textarea
           id="signup-address"
           required
@@ -186,7 +267,12 @@ export function SignupForm({ nextPath }: SignupFormProps) {
           placeholder="Office address, street, area / landmark"
           className="min-h-[88px] rounded-xl border-navy/10 bg-[#faf8f4] px-4 py-3 focus-visible:border-gold focus-visible:ring-gold/20"
           value={form.address}
-          onChange={(event) => setForm({ ...form, address: event.target.value })}
+          onChange={(event) =>
+            setForm({
+              ...form,
+              address: event.target.value,
+            })
+          }
         />
       </div>
 
@@ -201,10 +287,15 @@ export function SignupForm({ nextPath }: SignupFormProps) {
           {message}
         </p>
       )}
+
       <p className="flex items-start gap-2 rounded-xl border border-[#d8c7ad] bg-[#f5eee2] px-4 py-3 text-xs leading-5 text-[#725637]">
-        <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0" /> You will receive a verification email from Al
-        Qibla Air Services. Booking activates after administrator review of your agency details.
+        <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0" />
+
+        You will receive a verification email from Journey Genie.
+        Booking access activates after administrator review of your
+        agency details.
       </p>
+
       <Button
         type="submit"
         variant="primaryGold"
@@ -215,10 +306,12 @@ export function SignupForm({ nextPath }: SignupFormProps) {
           "Submitting application..."
         ) : (
           <>
-            Submit agent application <ArrowRight className="ml-2 h-4 w-4" />
+            Submit agent application
+            <ArrowRight className="ml-2 h-4 w-4" />
           </>
         )}
       </Button>
+
       <p className="text-center text-sm text-slate-500">
         Already a partner?{" "}
         <Link
@@ -245,9 +338,13 @@ function PremiumField({
 }) {
   return (
     <div className="space-y-2.5">
-      <Label htmlFor={id} className="font-semibold text-navy">
+      <Label
+        htmlFor={id}
+        className="font-semibold text-navy"
+      >
         {label}
       </Label>
+
       <div className="relative">
         <Icon className="pointer-events-none absolute left-4 top-1/2 z-10 h-4 w-4 -translate-y-1/2 text-[#a66d2f]" />
         {children}
