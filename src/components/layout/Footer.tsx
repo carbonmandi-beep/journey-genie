@@ -1,3 +1,4 @@
+```tsx
 import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -304,6 +305,21 @@ export function Footer() {
                   {SITE.businessHours}
                 </span>
               </p>
+
+              {/* GSTIN */}
+              <p className="flex items-start gap-3 text-white/65">
+                <IconBubble>
+                  <ShieldCheck className="h-4 w-4" />
+                </IconBubble>
+
+                <span className="text-xs leading-5">
+                  GSTIN:{" "}
+                  <span className="font-semibold text-white">
+                    03EBNPS6160K1Z6
+                  </span>
+                </span>
+              </p>
+
             </div>
 
             <Link
@@ -368,7 +384,7 @@ function LinkedInIcon({
       aria-hidden="true"
       className={className}
     >
-      <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.44-2.13 2.94v5.67H9.35V8.99h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.26 2.37 4.26 5.46v6.29ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM3.56 20.45h3.56V8.99H3.56v11.46ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z" />
+      <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.44-2.13 2.94v5.67H9.35V8.99h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.26 2.37 4.26 5.46v6.29ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM3.56 20.45h3.56V8.99H3.56v11.46ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.73V1.73C24 .77 23.2 0 22.22 0Z" />
     </svg>
   );
 }
@@ -425,3 +441,4 @@ function FooterLinks({
     </div>
   );
 }
+```
