@@ -1,4 +1,3 @@
-```tsx
 import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -75,7 +74,17 @@ const trustIcons = [
 ] as const;
 
 export function Footer() {
-  const regions = SITE.regions.join(", ");
+  /*
+   * Kept the same purpose as the original code,
+   * but written without nested template literals so
+   * Turbopack cannot throw the previous parsing error.
+   */
+  const regions =
+    SITE.regions.length > 1
+      ? SITE.regions.slice(0, -1).join(", ") +
+        " and " +
+        SITE.regions[SITE.regions.length - 1]
+      : SITE.regions[0];
 
   return (
     <footer className="relative bg-navy text-white">
@@ -194,4 +203,245 @@ export function Footer() {
               {socialLinks.map(
                 ({ href, label, Icon }) => (
                   <a
-                    key={
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className={
+                      label === "WhatsApp"
+                        ? "flex h-10 w-10 items-center justify-center rounded-xl border border-[#25D366]/35 bg-[#25D366]/15 text-[#25D366] transition hover:-translate-y-0.5 hover:bg-[#25D366]/25"
+                        : "flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white/60 transition hover:-translate-y-0.5 hover:border-gold/50 hover:bg-gold/10 hover:text-gold"
+                    }
+                  >
+                    <Icon className="h-4 w-4" />
+                  </a>
+                )
+              )}
+            </div>
+          </GsapStaggerItem>
+
+          {/* Explore */}
+          <GsapStaggerItem>
+            <FooterLinks
+              title="Explore"
+              links={exploreLinks}
+            />
+          </GsapStaggerItem>
+
+          {/* Company */}
+          <GsapStaggerItem>
+            <FooterLinks
+              title="Company"
+              links={companyLinks}
+            />
+          </GsapStaggerItem>
+
+          {/* Contact */}
+          <GsapStaggerItem>
+            <h3 className="text-xs font-bold uppercase tracking-[0.22em] text-gold">
+              Get in touch
+            </h3>
+
+            <div className="mt-5 space-y-3.5 text-sm">
+
+              {/* Phone */}
+              <a
+                href={`tel:${OFFICES.headOffice.phoneTel}`}
+                className="flex items-center gap-3 text-white/65 transition hover:text-white"
+              >
+                <IconBubble>
+                  <Phone className="h-4 w-4" />
+                </IconBubble>
+
+                {OFFICES.headOffice.phone}
+              </a>
+
+              {/* WhatsApp */}
+              <a
+                href={SITE.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 text-white/65 transition hover:text-white"
+              >
+                <IconBubble>
+                  <WhatsAppIcon className="h-4 w-4" />
+                </IconBubble>
+
+                WhatsApp {SITE.whatsappNumber}
+              </a>
+
+              {/* Email */}
+              <a
+                href="mailto:abhinav042@gmail.com"
+                className="flex items-center gap-3 text-white/65 transition hover:text-white"
+              >
+                <IconBubble>
+                  <Mail className="h-4 w-4" />
+                </IconBubble>
+
+                <span className="break-all">
+                  abhinav042@gmail.com
+                </span>
+              </a>
+
+              {/* LinkedIn */}
+              <a
+                href="https://www.linkedin.com/company/journey-genie/?viewAsMember=true"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 text-white/65 transition hover:text-white"
+              >
+                <IconBubble>
+                  <LinkedInIcon className="h-4 w-4" />
+                </IconBubble>
+
+                <span>LinkedIn</span>
+              </a>
+
+              {/* Business Hours */}
+              <p className="flex items-start gap-3 text-white/45">
+                <IconBubble>
+                  <Clock className="h-4 w-4" />
+                </IconBubble>
+
+                <span className="text-xs leading-5">
+                  {SITE.businessHours}
+                </span>
+              </p>
+
+              {/* GSTIN */}
+              <p className="flex items-start gap-3 text-white/65">
+                <IconBubble>
+                  <ShieldCheck className="h-4 w-4" />
+                </IconBubble>
+
+                <span className="text-xs leading-5">
+                  GSTIN:{" "}
+                  <span className="font-semibold text-white">
+                    03EBNPS6160K1Z6
+                  </span>
+                </span>
+              </p>
+
+            </div>
+
+            <Link
+              href="/contact/"
+              className="group mt-5 inline-flex items-center gap-2 rounded-xl border border-gold/30 bg-gold/[0.06] px-4 py-2.5 text-sm font-semibold text-gold-light transition hover:-translate-y-0.5 hover:border-gold/50 hover:bg-gold/10 hover:text-gold"
+            >
+              Contact Journey Genie
+
+              <ArrowUpRight className="h-4 w-4 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </Link>
+          </GsapStaggerItem>
+        </GsapStagger>
+      </div>
+
+      {/* Bottom */}
+      <div className="border-t border-white/10">
+        <div className="container-wide flex flex-col gap-4 py-5 text-xs text-white/55 sm:flex-row sm:items-center sm:justify-between">
+
+          <p>
+            © {new Date().getFullYear()} {SITE.name}. All rights reserved.
+          </p>
+
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
+
+            <Link
+              href="/privacy-policy/"
+              className="transition hover:text-white/90"
+            >
+              Privacy Policy
+            </Link>
+
+            <span
+              className="hidden h-3 w-px bg-white/15 sm:inline-block"
+              aria-hidden
+            />
+
+            <span className="inline-flex items-center gap-1.5">
+              <ShieldCheck className="h-3.5 w-3.5 text-gold" />
+              Your Magical Travel Partner
+            </span>
+
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+/* =========================================================
+   INLINE LINKEDIN ICON
+   ========================================================= */
+
+function LinkedInIcon({
+  className = "h-4 w-4",
+}: {
+  className?: string;
+}) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+      className={className}
+    >
+      <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.44-2.13 2.94v5.67H9.35V8.99h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.26 2.37 4.26 5.46v6.29ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM3.56 20.45h3.56V8.99H3.56v11.46ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z" />
+    </svg>
+  );
+}
+
+/* =========================================================
+   ICON BUBBLE
+   ========================================================= */
+
+function IconBubble({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  return (
+    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/5 text-gold">
+      {children}
+    </span>
+  );
+}
+
+/* =========================================================
+   FOOTER LINKS
+   ========================================================= */
+
+function FooterLinks({
+  title,
+  links,
+}: {
+  title: string;
+  links: ReadonlyArray<
+    readonly [string, string]
+  >;
+}) {
+  return (
+    <div>
+      <h3 className="text-xs font-bold uppercase tracking-[0.22em] text-gold">
+        {title}
+      </h3>
+
+      <ul className="mt-5 space-y-3">
+        {links.map(([label, href]) => (
+          <li key={href}>
+            <Link
+              href={href}
+              className="group inline-flex items-center gap-1.5 text-sm text-white/55 transition hover:translate-x-0.5 hover:text-white"
+            >
+              {label}
+
+              <ArrowUpRight className="h-3 w-3 opacity-0 transition group-hover:opacity-100" />
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
